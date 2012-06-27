@@ -398,7 +398,7 @@ public class TetrisGame
 
                 for (int cols = 0; cols < fBoard.getColumns(); cols++) 
                 {
-                    if (fBoard.getPieceAt(cols, rows) == TetrisBoard.EMPTY_BLOCK) 
+                    if (fBoard.getPieceAt(cols, rows).type == TetrisBoard.EMPTY_BLOCK) 
                         same = false;
                 }
 

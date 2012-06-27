@@ -195,7 +195,7 @@ public class TetrisBoard
     
     	for (int tempCol = 0; tempCol < fColumns; tempCol++) 
     	{
-    	    fMatrix[tempCol][0] = EMPTY_BLOCK;
+    	    fMatrix[tempCol][0] = new TetrisCell(EMPTY_BLOCK, 0);
     	}
     
     }
@@ -223,7 +223,7 @@ public class TetrisBoard
         	    if (x < 0 || x >= fColumns || y < 0 || y >= fRows)
         		    return false;
         	     
-                if (fMatrix[x][y] != EMPTY_BLOCK) return false;
+                if (fMatrix[x][y].type != EMPTY_BLOCK) return false;
         	}
         }
 
@@ -235,7 +235,7 @@ public class TetrisBoard
     public boolean canSpawn() {
         for (int x = xSpawn; x < xSpawn+4; x++) {
             for (int y = ySpawn; y < ySpawn+4; y++){
-                if (fMatrix[x][y] != EMPTY_BLOCK) return false;
+                if (fMatrix[x][y].type != EMPTY_BLOCK) return false;
             }
         }
         return true;
