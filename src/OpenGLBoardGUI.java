@@ -76,16 +76,16 @@ public class OpenGLBoardGUI {
                         int aRows = rows - startRow;
                         final TetrisCell piece = fBoard.getPieceAt(cols, rows);
 
-                        if (piece.type != TetrisBoard.EMPTY_BLOCK) 
+                        if (piece.pieceType != TetrisBoard.EMPTY_BLOCK) 
                         {                            
-                            renderBlock(cols*blockWidth + startX, aRows*blockHeight+startY, piece.type);
+                            renderBlock(cols*blockWidth + startX, aRows*blockHeight+startY, piece);
                         }
                     }
                 } 
             }	
         }
 
-        private void renderBlock(int x, int y, int piece) {
+        private void renderBlock(int x, int y, TetrisCell piece) {
             minos.drawSprite(x,y,piece);
             
         }            

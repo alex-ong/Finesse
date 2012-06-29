@@ -38,7 +38,17 @@ public class TetrisPiece
     private int     fAlignment;
     private Point   fCentrePoint = new Point();
     private Point[] fBlocks      = new Point[4];
-    private int[]   fBlockFlips = new int[4];
+    private int[]   fBlockRotate = new int[4];
+
+    public int[] getfBlockRotate() {
+        return fBlockRotate;
+    }
+
+    public int[] getfBlockSprite() {
+        return fBlockSprite;
+    }
+    
+    private int[]   fBlockSprite = new int[4];
 
     private TetrisBoard fBoard;
 
@@ -208,22 +218,35 @@ public class TetrisPiece
     }
     private void initializeBlocks()
     {
-        for (int i = 0; i < 4; i++){
-            fBlockFlips[i] = 0;
-        }
         switch (fType) 
     	{
             
     	    case I_PIECE : fBlocks[0] = spawnPoint(-1, 0);
+                           fBlockSprite[0] = 0;
+                           fBlockRotate[0] = 3;                           
                            fBlocks[1] = spawnPoint(0, 0);
+                           fBlockSprite[1] = 3;
+                           fBlockRotate[1] = 1;
                            fBlocks[2] = spawnPoint(1, 0);
+                           fBlockSprite[2] = 3;
+                           fBlockRotate[2] = 1;
                            fBlocks[3] = spawnPoint(2, 0);
+                           fBlockSprite[3] = 0;
+                           fBlockRotate[3] = 1;
                            break;
     	    
     	    case L_PIECE : fBlocks[0] = spawnPoint(-1, 1);
+                           fBlockSprite[0] = 0;
+                           fBlockRotate[0] = 0;
                            fBlocks[1] = spawnPoint(0, 1);
+                           fBlockSprite[1] = 0;
+                           fBlockRotate[1] = 0;
                            fBlocks[2] = spawnPoint(1, 0);
+                           fBlockSprite[2] = 0;
+                           fBlockRotate[2] = 0;
                            fBlocks[3] = spawnPoint(1, 1);
+                           fBlockSprite[3] = 0;
+                           fBlockRotate[3] = 0;
          		   break;
         
     	    case J_PIECE : fBlocks[0] = spawnPoint(-1, 0);

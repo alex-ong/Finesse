@@ -21,7 +21,7 @@ class TextureAtlas {
     private int minoWidth = 20;
     public Texture t;
     private IntBuffer vertexBuffer = BufferUtils.createIntBuffer(8);
-    private DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(64);
+    private DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(256);
     
     public void init(Texture t, int tW, int tH, int sW, int sH)    
     {
@@ -37,7 +37,7 @@ class TextureAtlas {
         double tw = (double)(spriteWidth) / texWidth;
         double th = (double)(spriteHeight) / texHeight;
         int numPerRow = texWidth / spriteWidth;
-        for (int frameIndex = 0; frameIndex < 8; frameIndex++){
+        for (int frameIndex = 0; frameIndex < 32; frameIndex++){
             double tx = (frameIndex % numPerRow) * tw;
             double ty = (frameIndex / numPerRow + 1) * th;
             double texVerts[] = {
@@ -50,14 +50,41 @@ class TextureAtlas {
         }
         
     }
-    void drawSprite(int posX, int posY, int frameIndex) {
-
-        final int verts[] = {
+    
+    private int[] getCellFlip(int posX, int posY, int rotation){
+        
+        if (rotation == 0)
+        return new int[]{
             posX, posY,
             posX + minoWidth, posY,
             posX + minoWidth, posY + minoWidth,
             posX, posY + minoWidth
         };
+        else if (rotation == 1)
+        return new int[]{
+            posX + minoWidth, posY,
+            posX + minoWidth, posY + minoWidth,
+            posX, posY + minoWidth,
+            posX, posY
+        };
+        else if (rotation == 2)
+        return new int[] {
+            posX + minoWidth, posY + minoWidth,
+            posX, posY + minoWidth,
+            posX, posY,
+            posX + minoWidth, posY
+        };
+        else
+        return new int[] {            
+            posX, posY + minoWidth,
+            posX, posY,
+            posX + minoWidth, posY,
+            posX + minoWidth, posY + minoWidth
+        };
+    }
+    void drawSprite(int posX, int posY, TetrisCell cell) {
+
+        int verts[] = getCellFlip(posX,posY,cell.orientationRotation);
 
         vertexBuffer.clear();
         vertexBuffer.put(verts);        
@@ -66,7 +93,7 @@ class TextureAtlas {
         
         
         vertexBuffer.rewind();         
-        textureBuffer.position(frameIndex*8);
+        textureBuffer.position(cell.pieceType*8+cell.orientation*64);
 
         
         // ... Bind the texture, enable the proper arrays

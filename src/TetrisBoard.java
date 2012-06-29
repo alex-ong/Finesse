@@ -139,13 +139,15 @@ public class TetrisBoard
         if (piece != null)
         {            
             final Point[] blocks = piece.getRelativePoints();
-
+            final int[] sprite = piece.getfBlockSprite();
+            final int[] blockRotate = piece.getfBlockRotate();
         	for (int count = 0; count < 4; count++) 
         	{
         	    int x = blocks[count].x;
         	    int y = blocks[count].y;
         
-        	    fMatrix[x][y] = new TetrisCell(piece.getType(), 0, 0);
+        	    fMatrix[x][y] = new TetrisCell(piece.getType(), sprite[count],
+                                                    blockRotate[count]);
         	}
                     
         }

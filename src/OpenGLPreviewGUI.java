@@ -101,7 +101,8 @@ public class OpenGLPreviewGUI
 
     
     private void renderBlock(int x, int y, int piece) {
-        minos.drawSprite(x,y,piece);
+       // minos.drawSprite(x,y,piece);
+        //@TODO
 
     }    
      

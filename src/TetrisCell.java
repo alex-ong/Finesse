@@ -8,10 +8,12 @@
  * @author Alex
  */
 public class TetrisCell {
-    public int type;
+    public int pieceType;
     public int orientation;
-    public TetrisCell(int type, int orientation){
-        this.type = type;
+    public int orientationRotation;
+    public TetrisCell(int type, int orientation, int orientationRotation){
+        this.pieceType = type;
         this.orientation = orientation;
+        this.orientationRotation = orientationRotation;
     }
 }
