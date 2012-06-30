@@ -60,7 +60,16 @@ public class SeriousRotation {
        points[1].y -= 1;
        points[2].x -= 1;
        points[3] = new Point(points[2].x,points[2].y+1);
-
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 3;          
+       sprites[2] = 3;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 0;
+       rotates[1] = 0;
+       rotates[2] = 0;
+       rotates[3] = 2;
     }
     
     /*
@@ -75,7 +84,16 @@ public class SeriousRotation {
        points[1].y+=1;
        points[2].x+=1;
        points[3].y-=1;
-
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 1;          
+       sprites[2] = 1;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 2;
+       rotates[1] = 0;
+       rotates[2] = 2;
+       rotates[3] = 0;
     }
     
     /*
@@ -85,10 +103,20 @@ public class SeriousRotation {
      * 
      */
     private static void RightRotateS(TetrisPiece p) {
-        Point[] points = p.getRelativePoints();
-        points[0] = new Point(points[0].x+1, points[0].y-1);
-        points[2] = new Point(points[2].x+1, points[2].y+1);
-        points[3].y+=2;                
+       Point[] points = p.getRelativePoints();
+       points[0] = new Point(points[0].x+1, points[0].y-1);
+       points[2] = new Point(points[2].x+1, points[2].y+1);
+       points[3].y+=2;  
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 1;          
+       sprites[2] = 1;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 0;
+       rotates[1] = 3;
+       rotates[2] = 1;
+       rotates[3] = 2;        
     }
 
     /*
@@ -102,6 +130,17 @@ public class SeriousRotation {
        points[0].x += 1;
        points[2] = new Point(points[2].x + 1, points[2].y+1);
        points[3].y -=1;
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 1;
+       sprites[1] = 3;          
+       sprites[2] = 0;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 0;
+       rotates[1] = 0;
+       rotates[2] = 2;
+       rotates[3] = 1;
+       
     }
 
     /*
@@ -112,7 +151,17 @@ public class SeriousRotation {
     private static void RightRotateT(TetrisPiece p) {
        Point[] points =  p.getRelativePoints();
        points[0] = new Point(points[0].x+1, points[0].y-1);
-       points[2].y+=2;       
+       points[2].y+=2;   
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 2;          
+       sprites[2] = 0;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 0;
+       rotates[1] = 3;
+       rotates[2] = 2;
+       rotates[3] = 1;
     }
     
     /*
@@ -125,6 +174,16 @@ public class SeriousRotation {
        points[0] = new Point(points[0].x+1, points[0].y-1);
        points[2] = new Point(points[1].x,points[1].y+1);
        points[3].y += 1;
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 3;          
+       sprites[2] = 1;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 0;
+       rotates[1] = 0;
+       rotates[2] = 3;
+       rotates[3] = 1;
     }
 
      /*
@@ -136,7 +195,17 @@ public class SeriousRotation {
        Point[] points =  p.getRelativePoints();
        points[0].y+=2;
        points[2] = new Point(points[1].x,points[1].y+1);
-       points[3] = new Point(points[1].x,points[1].y-1);       
+       points[3] = new Point(points[1].x,points[1].y-1);
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 3;          
+       sprites[2] = 1;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 3;
+       rotates[1] = 0;
+       rotates[2] = 2;
+       rotates[3] = 0;
     }
     
     /*
@@ -146,7 +215,17 @@ public class SeriousRotation {
      */
     private static void LeftRotateT(TetrisPiece p) {
        Point[] points =  p.getRelativePoints();              
-       points[3] = new Point(points[1].x,points[1].y+1);    
+       points[3] = new Point(points[1].x,points[1].y+1); 
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 2;          
+       sprites[2] = 0;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 3;
+       rotates[1] = 1;
+       rotates[2] = 0;
+       rotates[3] = 2;
     }
 
     
@@ -160,6 +239,16 @@ public class SeriousRotation {
        points[0].y -= 1;
        points[2] = new Point(points[1].x, points[1].y+1);
        points[3] = new Point(points[1].x, points[1].y-1);
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 3;          
+       sprites[2] = 0;
+       sprites[3] = 1;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 3;
+       rotates[1] = 0;
+       rotates[2] = 2;
+       rotates[3] = 1;
     }
 
     /*
@@ -172,7 +261,17 @@ public class SeriousRotation {
        Point[] points =  p.getRelativePoints();              
        points[0].y -= 1;
        points[2] = new Point(points[1].x-1, points[1].y);
-       points[3] = new Point(points[1].x, points[1].y+1);  
+       points[3] = new Point(points[1].x, points[1].y+1);
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 1;          
+       sprites[2] = 1;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 0;
+       rotates[1] = 1;
+       rotates[2] = 3;
+       rotates[3] = 2;
     }
     
     /*
@@ -186,6 +285,16 @@ public class SeriousRotation {
        points[1].y+=1;
        points[1].x+=1;
        points[3].y-=1;
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 1;          
+       sprites[2] = 1;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 2;
+       rotates[1] = 2;
+       rotates[2] = 0;
+       rotates[3] = 0;
     }
     /*
      * 0XX XXX
@@ -197,6 +306,16 @@ public class SeriousRotation {
        Point[] points =  p.getRelativePoints();              
        points[0].y+=1;       
        points[2] = new Point(points[3].x, points[3].y+1);
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 3;          
+       sprites[2] = 0;
+       sprites[3] = 1;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 3;
+       rotates[1] = 1;
+       rotates[2] = 2;
+       rotates[3] = 1;
        
     }
  /*
@@ -215,6 +334,19 @@ public class SeriousRotation {
     private static void FlipRotateL(TetrisPiece p) {
        Point[] points =  p.getRelativePoints();                     
        points[2] = new Point(points[0].x, points[0].y+1);
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 3;          
+       sprites[2] = 0;
+       sprites[3] = 1;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 3;
+       rotates[1] = 1;
+       rotates[2] = 2;
+       rotates[3] = 1;
+       
+       
+       
     }
 
     
