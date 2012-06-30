@@ -2,14 +2,14 @@
 import java.awt.Point;
 
 /*
- * Rotation tables for SRS
+ * Rotation tables for Serious rotation. (SRSly? :P)
  */
 
 /**
  *
  * @author Alex
  */
-public class SRSRotation {
+public class SeriousRotation {
     //some notes.. block 1 = "centre"
     //block 0 = left
     //block 1 = centre

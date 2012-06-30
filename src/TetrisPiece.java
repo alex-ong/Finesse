@@ -130,9 +130,9 @@ public class TetrisPiece
                 case LEFT   : moveLeft();  break; // Move left
                 case RIGHT  : moveRight();  break; // Move right
                 case DOWN   : moveDown();  break; // Drop
-                case CW: SRSRotation.RightRotate(this); break;
-                case CCW: SRSRotation.LeftRotate(this); break;
-                case FLIP: SRSRotation.FlipRotate(this); break;
+                case CW: SeriousRotation.RightRotate(this); break;
+                case CCW: SeriousRotation.LeftRotate(this); break;
+                case FLIP: SeriousRotation.FlipRotate(this); break;
                 case NEUTRAL: break;
             }
             
@@ -216,67 +216,142 @@ public class TetrisPiece
     private Point spawnPoint(int x, int y){
         return new Point(fBoard.xSpawn + x, fBoard.ySpawn+y);
     }
+    
+    private void initI(){
+        fBlocks[0] = spawnPoint(-1, 0);
+        fBlockSprite[0] = 0;
+        fBlockRotate[0] = 3;                           
+        fBlocks[1] = spawnPoint(0, 0);
+        fBlockSprite[1] = 3;
+        fBlockRotate[1] = 1;
+        fBlocks[2] = spawnPoint(1, 0);
+        fBlockSprite[2] = 3;
+        fBlockRotate[2] = 1;
+        fBlocks[3] = spawnPoint(2, 0);
+        fBlockSprite[3] = 0;
+        fBlockRotate[3] = 1;        
+    }
+    private void initL(){
+        fBlocks[0] = spawnPoint(-1, 1);
+        fBlockSprite[0] = 0;
+        fBlockRotate[0] = 3;
+        fBlocks[1] = spawnPoint(0, 1);
+        fBlockSprite[1] = 3;
+        fBlockRotate[1] = 1;
+        fBlocks[2] = spawnPoint(1, 0);
+        fBlockSprite[2] = 0;
+        fBlockRotate[2] = 0;
+        fBlocks[3] = spawnPoint(1, 1);
+        fBlockSprite[3] = 1;
+        fBlockRotate[3] = 2;        
+    }
+    // 0
+    // 213
+    private void initJ(){
+        fBlocks[0] = spawnPoint(-1, 0);
+        fBlockSprite[0] = 0;
+        fBlockRotate[0] = 0;            
+        fBlocks[1] = spawnPoint(0, 1);
+        fBlockSprite[1] = 3;
+        fBlockRotate[1] = 1;            
+        fBlocks[2] = spawnPoint(-1, 1);
+        fBlockSprite[2] = 1;
+        fBlockRotate[2] = 3;            
+        fBlocks[3] = spawnPoint(1, 1);  
+        fBlockSprite[3] = 0;
+        fBlockRotate[3] = 1;            
+    }
+    //  2
+    // 013
+    private void initT(){
+        fBlocks[0] = spawnPoint(-1, 1);
+        fBlockSprite[0] = 0;
+        fBlockRotate[0] = 3;  
+        fBlocks[1] = spawnPoint(0, 1);
+        fBlockSprite[1] = 2;
+        fBlockRotate[1] = 2;  
+        fBlocks[2] = spawnPoint(0, 0);
+        fBlockSprite[2] = 0;
+        fBlockRotate[2] = 0;  
+        fBlocks[3] = spawnPoint(1, 1);
+        fBlockSprite[3] = 0;
+        fBlockRotate[3] = 1;  
+    }
+    // 02
+    // 13
+    private void initO(){
+        fBlocks[0] = spawnPoint(0, 0);
+        fBlockSprite[0] = 1;
+        fBlockRotate[0] = 0;  
+        fBlocks[1] = spawnPoint(0, 1);
+        fBlockSprite[1] = 1;
+        fBlockRotate[1] = 3;  
+        fBlocks[2] = spawnPoint(1, 0);
+        fBlockSprite[2] = 1;
+        fBlockRotate[2] = 1;  
+        fBlocks[3] = spawnPoint(1, 1);
+        fBlockSprite[3] = 1;
+        fBlockRotate[3] = 2;  
+    }
+    
+    // 23
+    //01
+    private void initS(){
+        fBlocks[0] = spawnPoint(-1, 1);
+        fBlockSprite[0] = 0;
+        fBlockRotate[0] = 3;  
+        fBlocks[1] = spawnPoint(0, 1);
+        fBlockSprite[1] = 1;
+        fBlockRotate[1] = 2;  
+        fBlocks[2] = spawnPoint(0, 0);
+        fBlockSprite[2] = 1;
+        fBlockRotate[2] = 0;  
+        fBlocks[3] = spawnPoint(1, 0);        
+        fBlockSprite[3] = 0;
+        fBlockRotate[3] = 1;  
+    }
+    
+    // 01
+    //  23 
+    private void initZ(){
+        fBlocks[0] = spawnPoint(-1, 0);
+        fBlockSprite[0] = 0;
+        fBlockRotate[0] = 3;  
+        fBlocks[1] = spawnPoint(0, 0);
+        fBlockSprite[1] = 1;
+        fBlockRotate[1] = 1;  
+        fBlocks[2] = spawnPoint(0, 1);
+        fBlockSprite[2] = 1;
+        fBlockRotate[2] = 3;  
+        fBlocks[3] = spawnPoint(1, 1);
+        fBlockSprite[3] = 0;
+        fBlockRotate[3] = 1;  
+    }
+    
     private void initializeBlocks()
     {
         switch (fType) 
     	{
             
-    	    case I_PIECE : fBlocks[0] = spawnPoint(-1, 0);
-                           fBlockSprite[0] = 0;
-                           fBlockRotate[0] = 3;                           
-                           fBlocks[1] = spawnPoint(0, 0);
-                           fBlockSprite[1] = 3;
-                           fBlockRotate[1] = 1;
-                           fBlocks[2] = spawnPoint(1, 0);
-                           fBlockSprite[2] = 3;
-                           fBlockRotate[2] = 1;
-                           fBlocks[3] = spawnPoint(2, 0);
-                           fBlockSprite[3] = 0;
-                           fBlockRotate[3] = 1;
+    	    case I_PIECE : initI();
                            break;
     	    
-    	    case L_PIECE : fBlocks[0] = spawnPoint(-1, 1);
-                           fBlockSprite[0] = 0;
-                           fBlockRotate[0] = 0;
-                           fBlocks[1] = spawnPoint(0, 1);
-                           fBlockSprite[1] = 0;
-                           fBlockRotate[1] = 0;
-                           fBlocks[2] = spawnPoint(1, 0);
-                           fBlockSprite[2] = 0;
-                           fBlockRotate[2] = 0;
-                           fBlocks[3] = spawnPoint(1, 1);
-                           fBlockSprite[3] = 0;
-                           fBlockRotate[3] = 0;
+    	    case L_PIECE : initL();
          		   break;
         
-    	    case J_PIECE : fBlocks[0] = spawnPoint(-1, 0);
-                           fBlocks[1] = spawnPoint(0, 1);
-                           fBlocks[2] = spawnPoint(-1, 1);
-                           fBlocks[3] = spawnPoint(1, 1);
+    	    case J_PIECE : initJ();
             		   break;
         
-    	    case Z_PIECE : fBlocks[0] = spawnPoint(-1, 0);
-                           fBlocks[1] = spawnPoint(0, 0);
-                           fBlocks[2] = spawnPoint(0, 1);
-                           fBlocks[3] = spawnPoint(1, 1);
+    	    case Z_PIECE : initZ();
             		   break;
     	    
-    	    case S_PIECE : fBlocks[0] = spawnPoint(-1, 1);
-                           fBlocks[1] = spawnPoint(0, 1);
-                           fBlocks[2] = spawnPoint(0, 0);
-                           fBlocks[3] = spawnPoint(1, 0);
+    	    case S_PIECE : initS();
             		   break;
     
-    	    case O_PIECE : fBlocks[0] = spawnPoint(0, 0);
-                           fBlocks[1] = spawnPoint(0, 1);
-                           fBlocks[2] = spawnPoint(1, 0);
-                           fBlocks[3] = spawnPoint(1, 1);
+    	    case O_PIECE : initO();
             		   break;
     	    
-    	    case T_PIECE : fBlocks[0] = spawnPoint(-1, 1);
-                           fBlocks[1] = spawnPoint(0, 1);
-                           fBlocks[2] = spawnPoint(0, 0);
-                           fBlocks[3] = spawnPoint(1, 1);
+    	    case T_PIECE : initT();
         		   break;
     	}
     }

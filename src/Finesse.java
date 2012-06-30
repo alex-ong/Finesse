@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
  * 
  * @author Alex Ong
  */
-public class KeyTris
+public class Finesse
 {
 
 
@@ -201,7 +201,7 @@ public class DisplayExample  {
     
     
     
-    public KeyTris(String args[])
+    public Finesse(String args[])
     {
         DisplayExample displayExample = new DisplayExample(args);
         displayExample.start();       
@@ -217,7 +217,7 @@ public class DisplayExample  {
     {
        // System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
         //make sure u copy the dlls!
-        new KeyTris(args);
+        new Finesse(args);
 
         
     }
