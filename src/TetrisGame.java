@@ -102,12 +102,12 @@ public class TetrisGame
         return currentFrame - gameStartFrame;
     }
 
-        
+    
     public void render() {
         if (fGameState == GAME_PLAYING) {
             currentFrame = getTime(); // call before loop to initialise fps time        
         }
-        fBoardGUI.render();
+        fBoardGUI.render();        
         fNowPreview.render();
         for (int i = 0; i < NUM_PREVIEWS; i++){
             fPreviews[i].render();
@@ -186,6 +186,11 @@ public class TetrisGame
             printReplay = true;
         } else {
             printReplay = false;
+        }
+        if (options.getSetting(options.GET_TEXTURE_ROTATE) == 1) {
+            fBoardGUI.getTextureAtlas().setNoRotate(false);
+        } else {
+            fBoardGUI.getTextureAtlas().setNoRotate(true);
         }
     }
     

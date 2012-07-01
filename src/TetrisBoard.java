@@ -107,6 +107,9 @@ public class TetrisBoard
      */
     public TetrisCell getPieceAt(int x, int y)
     {
+        if (x < 0 || x >= fColumns || y < 0 || y >= fRows) {
+            return null;
+        }
     	return fMatrix[x][y];
     }
 

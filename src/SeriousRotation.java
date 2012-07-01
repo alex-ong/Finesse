@@ -324,7 +324,17 @@ public class SeriousRotation {
      * XXX X2X   
      */
     private static void FlipRotateT(TetrisPiece p) {
-        p.getRelativePoints()[2].y+=2;
+       p.getRelativePoints()[2].y+=2;
+       int[] sprites = p.getfBlockSprite();
+       sprites[0] = 0;
+       sprites[1] = 2;          
+       sprites[2] = 0;
+       sprites[3] = 0;
+       int[] rotates = p.getfBlockRotate();
+       rotates[0] = 3;
+       rotates[1] = 0;
+       rotates[2] = 2;
+       rotates[3] = 1;
     }
     /*
      * XX2 XXX
@@ -335,12 +345,12 @@ public class SeriousRotation {
        Point[] points =  p.getRelativePoints();                     
        points[2] = new Point(points[0].x, points[0].y+1);
        int[] sprites = p.getfBlockSprite();
-       sprites[0] = 0;
+       sprites[0] = 1;
        sprites[1] = 3;          
        sprites[2] = 0;
-       sprites[3] = 1;
+       sprites[3] = 0;
        int[] rotates = p.getfBlockRotate();
-       rotates[0] = 3;
+       rotates[0] = 0;
        rotates[1] = 1;
        rotates[2] = 2;
        rotates[3] = 1;

@@ -52,12 +52,53 @@ public class OpenGLBoardGUI {
                renderBackdrop();
                fTextRenderer.render();             
                renderPieces();
-
+               renderOutline();
 
 	}
         
-
+        private void renderLine(int x, int y, int side) {
+            minos.drawLine(x,y,side);            
+        }   
         
+        private void renderOutline(){
+            // Draw the board pieces if board not null.
+            if (fBoard != null) 
+            {
+            final int numCols = fBoard.getColumns();
+            final int numRows = fBoard.getRows();                        
+            final int startRow = fBoard.getInvisRows();            
+            Color.white.bind();
+            
+                for (int cols = 0; cols < numCols; cols++) 
+                {
+                    for (int rows = startRow; rows < numRows; rows++) 
+                    {
+                        int aRows = rows - startRow;
+                        final TetrisCell piece = fBoard.getPieceAt(cols, rows);
+
+                        if (piece.pieceType != TetrisBoard.EMPTY_BLOCK) 
+                        {   
+                            int ColsArg = cols*blockWidth + startX;
+                            int RowsArg = aRows*blockHeight+startY;
+                            TetrisCell above = fBoard.getPieceAt(cols,rows-1);
+                            if (above != null && above.pieceType == TetrisBoard.EMPTY_BLOCK)
+                            renderLine(ColsArg,RowsArg,0);
+                            TetrisCell right = fBoard.getPieceAt(cols+1,rows);
+                            if (right != null && right.pieceType == TetrisBoard.EMPTY_BLOCK)
+                            renderLine(ColsArg,RowsArg,1);
+                            TetrisCell down = fBoard.getPieceAt(cols,rows+1);
+                            if (down != null && down.pieceType == TetrisBoard.EMPTY_BLOCK)
+                            renderLine(ColsArg,RowsArg,2);
+                            TetrisCell left = fBoard.getPieceAt(cols-1,rows);
+                            if (left != null && left.pieceType == TetrisBoard.EMPTY_BLOCK)
+                            renderLine(ColsArg,RowsArg,3);
+                            
+                        }
+                    }
+                } 
+            }	            
+            
+        }
         private void renderPieces() {
             
             // Draw the board pieces if board not null.
@@ -65,8 +106,7 @@ public class OpenGLBoardGUI {
             {
             final int numCols = fBoard.getColumns();
             final int numRows = fBoard.getRows();                        
-            final int startRow = fBoard.getInvisRows();
-            final int visibleRows = numRows - startRow;
+            final int startRow = fBoard.getInvisRows();            
             minos.t.bind();
             Color.white.bind();
                 for (int cols = 0; cols < numCols; cols++) 
@@ -124,6 +164,10 @@ public class OpenGLBoardGUI {
 
     void start() {
         fTextRenderer.start();
+    }
+
+    TextureAtlas getTextureAtlas() {
+        return minos;
     }
 
 

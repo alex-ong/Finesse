@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 public class OpenGLPreviewGUI 
 {
     private int piece = 0;
-    private boolean[][] bitarray = new boolean[2][4];
+    private TetrisCell[][] bitarray = new TetrisCell[2][4];
     private int startX;
     private int startY;
     private TextureAtlas minos = null;
@@ -26,6 +26,11 @@ public class OpenGLPreviewGUI
     public OpenGLPreviewGUI(int startX, int startY){
         this.startX = startX;
         this.startY = startY;
+        for(int i = 0; i < 2; i++){
+            for (int j = 0; j < 4; j++){
+                bitarray[i][j] = new TetrisCell(0,0,0);
+            }
+        }
     }
     public void setTextureAtlas(TextureAtlas at){
         minos = at;
@@ -44,31 +49,105 @@ public class OpenGLPreviewGUI
         }
     }
     
+    private void setNoPiece(){
+        for (int i = 0; i < 2; i++){
+            for (int j = 0; j < 4; j++){
+                bitarray[i][j].clear();
+            }
+        }
+    }
+    
+    private void setIPiece(){
+        bitarray[0][0].clear();
+        bitarray[0][1].clear();
+        bitarray[0][2].clear();
+        bitarray[0][3].clear();
+        bitarray[1][0].set(TetrisPiece.I_PIECE,0,3);
+        bitarray[1][1].set(TetrisPiece.I_PIECE,3,1);
+        bitarray[1][2].set(TetrisPiece.I_PIECE,3,1);
+        bitarray[1][3].set(TetrisPiece.I_PIECE,0,1);
+    }
+    
+    private void setJPiece(){
+        bitarray[0][0].set(TetrisPiece.J_PIECE,0,0);
+        bitarray[0][1].clear();
+        bitarray[0][2].clear();
+        bitarray[0][3].clear();
+        bitarray[1][0].set(TetrisPiece.J_PIECE,1,3);
+        bitarray[1][1].set(TetrisPiece.J_PIECE,3,1);
+        bitarray[1][2].set(TetrisPiece.J_PIECE,0,1);
+        bitarray[1][3].clear();
+    }
+    private void setLPiece(){
+        bitarray[0][0].clear();
+        bitarray[0][1].clear();
+        bitarray[0][2].set(TetrisPiece.L_PIECE,0,0);
+        bitarray[0][3].clear();
+        bitarray[1][0].set(TetrisPiece.L_PIECE,0,3);
+        bitarray[1][1].set(TetrisPiece.L_PIECE,3,1);
+        bitarray[1][2].set(TetrisPiece.L_PIECE,1,2);
+        bitarray[1][3].clear();
+    }
+    private void setTPiece(){
+        bitarray[0][0].clear();
+        bitarray[0][1].set(TetrisPiece.T_PIECE,0,0);
+        bitarray[0][2].clear();
+        bitarray[0][3].clear();
+        bitarray[1][0].set(TetrisPiece.T_PIECE,0,3);
+        bitarray[1][1].set(TetrisPiece.T_PIECE,2,2);
+        bitarray[1][2].set(TetrisPiece.T_PIECE,0,1);
+        bitarray[1][3].clear();
+    }
+    private void setOPiece(){
+        bitarray[0][0].clear();
+        bitarray[0][1].set(TetrisPiece.O_PIECE,1,0);
+        bitarray[0][2].set(TetrisPiece.O_PIECE,1,1);
+        bitarray[0][3].clear();
+        bitarray[1][0].clear();
+        bitarray[1][1].set(TetrisPiece.O_PIECE,1,3);
+        bitarray[1][2].set(TetrisPiece.O_PIECE,1,2);
+        bitarray[1][3].clear();
+    }
+    
+    private void setSPiece(){
+        bitarray[0][0].clear();
+        bitarray[0][1].set(TetrisPiece.S_PIECE,1,0);
+        bitarray[0][2].set(TetrisPiece.S_PIECE,0,1);
+        bitarray[0][3].clear();
+        bitarray[1][0].set(TetrisPiece.S_PIECE,0,3);
+        bitarray[1][1].set(TetrisPiece.S_PIECE,1,2);
+        bitarray[1][2].clear();
+        bitarray[1][3].clear();
+    }
+    private void setZPiece(){
+        bitarray[0][0].set(TetrisPiece.Z_PIECE,0,3);
+        bitarray[0][1].set(TetrisPiece.Z_PIECE,1,1);
+        bitarray[0][2].clear();
+        bitarray[0][3].clear();
+        bitarray[1][0].clear();
+        bitarray[1][1].set(TetrisPiece.Z_PIECE,1,3);
+        bitarray[1][2].set(TetrisPiece.Z_PIECE,0,1);
+        bitarray[1][3].clear();
+    }
+    
     private void setGrid() {
+     
       if (piece == TetrisPiece.NO_PIECE) {
-          boolean[][] tmp = {{false, false, false, false},{false,false,false,false}};
-          copyGrid(tmp);
+          setNoPiece();
       } else if (piece == TetrisPiece.I_PIECE) {
-          boolean[][] tmp = {{false, false, false, false},{true, true, true, true}};
-          copyGrid(tmp);
+          setIPiece();
       } else if (piece == TetrisPiece.J_PIECE) {
-          boolean[][] tmp = {{true, false, false, false},{true, true, true, false}};
-          copyGrid(tmp);          
+          setJPiece();
       } else if (piece == TetrisPiece.L_PIECE) {
-          boolean[][] tmp = {{false, false, true, false},{true, true, true, false}};
-          copyGrid(tmp);          
+          setLPiece();
       } else if (piece == TetrisPiece.T_PIECE) {
-          boolean[][] tmp = {{false, true, false, false},{true, true, true, false}};
-          copyGrid(tmp);          
+          setTPiece();
       } else if (piece == TetrisPiece.S_PIECE) {
-          boolean[][] tmp = {{false, true, true, false},{true, true, false, false}};
-          copyGrid(tmp);          
+          setSPiece();
       } else if (piece == TetrisPiece.Z_PIECE) {
-          boolean[][] tmp = {{true, true, false, false},{false, true, true, false}};
-          copyGrid(tmp);          
+          setZPiece();
       } else if (piece == TetrisPiece.O_PIECE) {
-          boolean[][] tmp = {{false, true, true, false},{false, true, true, false}};
-          copyGrid(tmp);          
+          setOPiece();
       }
       
         
@@ -85,14 +164,8 @@ public class OpenGLPreviewGUI
         {
             for (int cols = 0; cols < numCols; cols++)
             {
-                final boolean bit = bitarray[rows][cols];
-                if (bit != false) {  
-                    if (monochrome) {
-                        renderBlock(cols * minoWidth + startX, rows*minoWidth + startY, 7);
-                    } else {
-                        renderBlock(cols * minoWidth + startX, rows*minoWidth + startY, piece);
-                   }
-                }
+                final TetrisCell bit = bitarray[rows][cols];                                
+                    renderBlock(cols * minoWidth + startX, rows*minoWidth + startY, bit);                   
             }
 
         }
@@ -100,9 +173,9 @@ public class OpenGLPreviewGUI
     }    
 
     
-    private void renderBlock(int x, int y, int piece) {
-       // minos.drawSprite(x,y,piece);
-        //@TODO
+    private void renderBlock(int x, int y, TetrisCell piece) { 
+        if (piece.pieceType == TetrisPiece.NO_PIECE) return;
+        minos.drawSprite(x,y,piece);       
 
     }    
      

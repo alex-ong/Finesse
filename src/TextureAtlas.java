@@ -4,6 +4,7 @@ import java.nio.DoubleBuffer;
 import java.nio.IntBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 
 /*
@@ -19,6 +20,16 @@ class TextureAtlas {
     private int spriteWidth, spriteHeight;
     private int texWidth, texHeight;
     private int minoWidth = 20;
+    private boolean noRotate = false;
+
+    public boolean isNoRotate() {
+        return noRotate;
+    }
+
+    public void setNoRotate(boolean noRotate) {
+        this.noRotate = noRotate;
+    }
+    
     public Texture t;
     private IntBuffer vertexBuffer = BufferUtils.createIntBuffer(8);
     private DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(256);
@@ -53,7 +64,7 @@ class TextureAtlas {
     
     private int[] getCellFlip(int posX, int posY, int rotation){
         
-        if (rotation == 0)
+        if (rotation == 0 || noRotate)
         return new int[]{
             posX, posY,
             posX + minoWidth, posY,
@@ -82,16 +93,57 @@ class TextureAtlas {
             posX + minoWidth, posY + minoWidth
         };
     }
-    void drawSprite(int posX, int posY, TetrisCell cell) {
+    
+    private int[] getLineCoords(int posX, int posY, int side){
+        
+        if (side == 0)
+        return new int[]{
+            posX, posY,
+            posX + minoWidth, posY
+        };
+        else if (side == 1)
+        return new int[]{
+            posX + minoWidth, posY,
+            posX + minoWidth, posY + minoWidth,            
+        };
+        else if (side == 2)
+        return new int[] {
+            posX + minoWidth, posY + minoWidth,
+            posX, posY + minoWidth,            
+        };
+        else
+        return new int[] {            
+            posX, posY + minoWidth,
+            posX, posY            
+        };
+    }
+    
+    //used to draw outline
+    public void drawLine(int posX, int posY, int side){        
+        int[] verts = getLineCoords(posX,posY,side);
+        
+       
+        
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        vertexBuffer.clear();
+        vertexBuffer.put(verts);
+        vertexBuffer.rewind();        
+        
+        GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+        GL11.glVertexPointer(2, 0, vertexBuffer);       
+        GL11.glDrawArrays(GL11.GL_LINES, 0, 2);
+        GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);       
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        
+        
+    }
+    public void drawSprite(int posX, int posY, TetrisCell cell) {
 
         int verts[] = getCellFlip(posX,posY,cell.orientationRotation);
 
         vertexBuffer.clear();
         vertexBuffer.put(verts);        
-        
-              
-        
-        
+
         vertexBuffer.rewind();         
         textureBuffer.position(cell.pieceType*8+cell.orientation*64);
 

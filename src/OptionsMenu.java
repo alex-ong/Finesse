@@ -24,15 +24,18 @@ class OptionsMenu {
     private boolean exit = false;
     private int selection = 0;
     private static final String[] captions = {"Randomizer", "Alignment", "Auto Save Replays", 
-                                              "Save Replay Min Time", "Save full replays only", "Return to Main Menu"};
+                                              "Save Replay Min Time", "Save full replays only", 
+                                              "Rotate SpriteSheet",
+                                              "Return to Main Menu"};
     private String[][] values = { {"Pure", "Bag", "History 6"},
                                          {"Left", "Right", "Center"},
                                          {"No", "Yes"},
                                          {"ALL"},
                                          {"No", "Yes"},
+                                         {"No", "Yes"},
                                          {""}};
     private static boolean MouseDown = false;
-    private static int selections[] = {1,2,1,0,1,0};
+    private static int selections[] = {1,2,1,0,1,0,0};
     private static final int startX = 100;
     private static final int startY = 100;
     private static final int lineHeight = 30;
@@ -45,6 +48,7 @@ class OptionsMenu {
     public static final int GET_SAVE = 2;
     public static final int GET_MAXTIME = 3;
     public static final int GET_FULLSAVE = 4;
+    public static final int GET_TEXTURE_ROTATE = 5;
     public int getSetting(int setting) {
         return selections[setting];    
     }

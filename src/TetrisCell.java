@@ -16,4 +16,12 @@ public class TetrisCell {
         this.orientation = orientation;
         this.orientationRotation = orientationRotation;
     }
+    public void clear(){
+        set(TetrisPiece.NO_PIECE,0,0);
+    }
+    public void set (int t, int o, int or){
+        pieceType = t;
+        orientation = o;
+        orientationRotation = or;
+    }
 }
