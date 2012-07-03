@@ -1,4 +1,7 @@
 
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
@@ -24,6 +27,8 @@ public class OpenGLBoardGUI {
         private TextureHolder textures = null;
         private TextureAtlas minos = null;
         private TextRenderer fTextRenderer = null;
+        private boolean flipBoard;
+        private boolean flipActive;
     	/**
 	 * draw a quad with the image on it
 	 */
@@ -37,12 +42,18 @@ public class OpenGLBoardGUI {
         
         
         public void setTextureAtlas(TextureAtlas minos)
-        {
-           
+        {           
             this.minos = minos;
         }
 
 	public void render() {
+               flipBoard = 
+                fGame.getOptions().getSetting(OptionsMenu.GET_TEXTURE_ROTATE_BOARD) == 1 ?
+                        true : false;            
+               flipActive = 
+                fGame.getOptions().getSetting(OptionsMenu.GET_TEXTURE_ROTATE_ACTIVE) == 1 ?
+                        true : false;            
+            
                setStats(fGame.getCurrentFrame()-fGame.getFirstFrame(),
                        fGame.getPieces(),
                        fGame.getTotalLines(),
@@ -51,9 +62,9 @@ public class OpenGLBoardGUI {
                        fGame.getPieceStats());               
                renderBackdrop();
                fTextRenderer.render();             
-               renderPieces();
-               renderOutline();
-
+               ArrayList<Point> activeCells = renderPieces();
+               renderActive(activeCells);
+               renderOutline();               
 	}
         
         private void renderLine(int x, int y, int side) {
@@ -99,16 +110,17 @@ public class OpenGLBoardGUI {
             }	            
             
         }
-        private void renderPieces() {
-            
+        private ArrayList<Point> renderPieces() {
+            ArrayList<Point> result = new ArrayList<Point>();
             // Draw the board pieces if board not null.
             if (fBoard != null) 
             {
-            final int numCols = fBoard.getColumns();
-            final int numRows = fBoard.getRows();                        
-            final int startRow = fBoard.getInvisRows();            
-            minos.stack.bind();
-            Color.white.bind();
+                final int numCols = fBoard.getColumns();
+                final int numRows = fBoard.getRows();                        
+                final int startRow = fBoard.getInvisRows();            
+                textures.getStackMinos().bind();
+                Color.white.bind();
+
                 for (int cols = 0; cols < numCols; cols++) 
                 {
                     for (int rows = startRow; rows < numRows; rows++) 
@@ -117,16 +129,30 @@ public class OpenGLBoardGUI {
                         final TetrisCell piece = fBoard.getPieceAt(cols, rows);
 
                         if (piece.pieceType != TetrisBoard.EMPTY_BLOCK) 
-                        {                            
-                            renderBlock(cols*blockWidth + startX, aRows*blockHeight+startY, piece);
+                        {   
+                            if (piece.activeKey == -1)
+                            renderBlock(cols*blockWidth + startX, aRows*blockHeight+startY, piece, flipBoard);
+                            else 
+                                result.add(new Point(cols,rows));
                         }
                     }
                 } 
             }	
+            return result;
         }
-
-        private void renderBlock(int x, int y, TetrisCell piece) {
-            minos.drawSprite(x,y,piece);
+        private void renderActive(ArrayList<Point> points) {
+            
+            textures.getActiveMinos().bind();
+            Color.white.bind();
+            for (Point p: points){                                
+                final TetrisCell piece = fBoard.getPieceAt(p.x,p.y);
+                int aRows = p.y - fBoard.getInvisRows();
+                renderBlock(p.x*blockWidth+startX, aRows*blockHeight+startY,piece, flipActive);
+            }
+        }
+        
+        private void renderBlock(int x, int y, TetrisCell piece, boolean flip) {
+            minos.drawSprite(x,y,piece, flip);
             
         }            
             
@@ -170,7 +196,21 @@ public class OpenGLBoardGUI {
         return minos;
     }
 
+    public boolean isFlipActive() {
+        return flipActive;
+    }
 
+    public void setFlipActive(boolean flipActive) {
+        this.flipActive = flipActive;
+    }
+
+    public boolean isFlipBoard() {
+        return flipBoard;
+    }
+
+    public void setFlipBoard(boolean flipBoard) {
+        this.flipBoard = flipBoard;
+    }
 
         
 }

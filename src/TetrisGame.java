@@ -2,7 +2,6 @@
 
 import java.util.LinkedList;
 import java.util.Vector;
-import org.lwjgl.Sys;
 /**
  * A generic Tetris game with no GUI.
  * 
@@ -31,6 +30,8 @@ public class TetrisGame
     private TextRenderer fTextRenderer = new TextRenderer();
     private TextureHolder fTextures = null;
     private OptionsMenu options = null;
+
+
     private boolean fMenu = false;
     public final static int NUM_ROWS = 25;
     public final static int NUM_INVIS_ROWS = 5;
@@ -109,7 +110,7 @@ public class TetrisGame
         }
         fBoardGUI.render();
         //bind texture once here.
-        fBoardGUI.getTextureAtlas().prev.bind();
+        fTextures.getPreviewMinos().bind();
         fNowPreview.render();
         for (int i = 0; i < NUM_PREVIEWS; i++){
             fPreviews[i].render();
@@ -163,8 +164,8 @@ public class TetrisGame
         fTextRenderer.reset();        
         fMenu = false;
         fBoard.resetBoard();
-        randomizer = options.getSetting(options.GET_RANDOMIZER);
-        pieceAlignment = options.getSetting(options.GET_ALIGNMENT);
+        randomizer = options.getSetting(OptionsMenu.GET_RANDOMIZER);
+        pieceAlignment = options.getSetting(OptionsMenu.GET_ALIGNMENT);
         initRandomizer();
         fTotalLines = 0;
         fScore      = 0;
@@ -184,16 +185,31 @@ public class TetrisGame
             pieceStats[i] = 0;
         }
         
-        if (options.getSetting(options.GET_SAVE) == 1) {
+        if (options.getSetting(OptionsMenu.GET_SAVE) == 1) {
             printReplay = true;
         } else {
             printReplay = false;
         }
-        if (options.getSetting(options.GET_TEXTURE_ROTATE) == 1) {
-            fBoardGUI.getTextureAtlas().setNoRotate(false);
+        
+        if (options.getSetting(OptionsMenu.GET_TEXTURE_ROTATE_BOARD) == 1) {
+            fBoardGUI.setFlipBoard(true);
         } else {
-            fBoardGUI.getTextureAtlas().setNoRotate(true);
+            fBoardGUI.setFlipBoard(false);
         }
+        
+        if (options.getSetting(OptionsMenu.GET_TEXTURE_ROTATE_ACTIVE) == 1) {
+            fBoardGUI.setFlipActive(true);
+        } else {
+            fBoardGUI.setFlipActive(false);
+        }
+        boolean flipPreviews =
+        (options.getSetting(OptionsMenu.GET_TEXTURE_ROTATE_PREVIEW) == 1);
+        for (int i = 0; i < NUM_PREVIEWS; i++){
+            fPreviews[i].setFlipPreview(flipPreviews);
+        }
+        fHoldPreview.setFlipPreview(flipPreviews);
+        fNowPreview.setFlipPreview(flipPreviews);
+        
     }
     
     public void startGame(){
@@ -216,9 +232,9 @@ public class TetrisGame
     }
     
     public static int stringToAlignment(String s){
-        if (s == "LEFT") return 0;
-        else if (s == "RIGHT") return 1;
-        else if (s == "CENTER") return 2;
+        if ("LEFT".equals(s)) return 0;
+        else if ("RIGHT".equals(s)) return 1;
+        else if ("CENTER".equals(s)) return 2;
         else return 2;        
     }
     /**
@@ -289,8 +305,11 @@ public class TetrisGame
         GameLogic();
         
     }
+    public void releaseKey(int key) {
+        fBoard.releaseKey(key);
+    }
     
-    public void typer(int column, int rotation) {
+    public void typer(int column, int rotation, int key) {
         if (!(fGameState == GAME_PLAYING)) return;
         fHoldPreview.setMonochrome(false);
         SoundCache.getColumn(column).playAsSoundEffect((float)1.0, (float)1.0, false);
@@ -299,6 +318,7 @@ public class TetrisGame
         fKeys++;
         move(rotation);        
         int currColumn = fCurrPiece.column();
+        fCurrPiece.setKeyPressed(key);
         while (currColumn != column) {
             if (currColumn < column) {
                 if (!move(TetrisPiece.RIGHT)) {
@@ -605,5 +625,8 @@ public class TetrisGame
 
     public void setGameTimer(long time) {
         currentFrame = gameStartFrame + time;
+    }
+    public OptionsMenu getOptions() {
+        return options;
     }
 }

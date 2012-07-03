@@ -25,7 +25,9 @@ class OptionsMenu {
     private int selection = 0;
     private static final String[] captions = {"Randomizer", "Alignment", "Auto Save Replays", 
                                               "Save Replay Min Time", "Save full replays only", 
-                                              "Rotate SpriteSheet",
+                                              "Rotate SpriteSheet - Board",
+                                              "Rotate SpriteSheet - Preview",
+                                              "Rotate SpriteSheet - Active",
                                               "Return to Main Menu"};
     private String[][] values = { {"Pure", "Bag", "History 6"},
                                          {"Left", "Right", "Center"},
@@ -33,13 +35,15 @@ class OptionsMenu {
                                          {"ALL"},
                                          {"No", "Yes"},
                                          {"No", "Yes"},
+                                         {"No", "Yes"},
+                                         {"No", "Yes"},                                         
                                          {""}};
     private static boolean MouseDown = false;
-    private static int selections[] = {1,2,1,0,1,0,0};
-    private static final int startX = 100;
+    private static int selections[] = {1,2,1,0,1,0,0,0,0};
+    private static final int startX = 50;
     private static final int startY = 100;
     private static final int lineHeight = 30;
-    private static final int startValueX = 400;
+    private static final int startValueX = 550;
     private static final int NUM_SELECTIONS = captions.length;
     
     TrueTypeFont font;
@@ -48,7 +52,9 @@ class OptionsMenu {
     public static final int GET_SAVE = 2;
     public static final int GET_MAXTIME = 3;
     public static final int GET_FULLSAVE = 4;
-    public static final int GET_TEXTURE_ROTATE = 5;
+    public static final int GET_TEXTURE_ROTATE_BOARD = 5;
+    public static final int GET_TEXTURE_ROTATE_PREVIEW = 6;
+    public static final int GET_TEXTURE_ROTATE_ACTIVE = 7;
     public int getSetting(int setting) {
         return selections[setting];    
     }

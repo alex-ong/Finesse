@@ -19,6 +19,9 @@ public class OpenGLPreviewGUI
     private TextureAtlas minos = null;
     private int minoWidth = 20;
     private boolean monochrome = false;
+    private boolean flipPreview;
+
+    
     public OpenGLPreviewGUI(int startX, int startY){
         this.startX = startX;
         this.startY = startY;
@@ -171,7 +174,7 @@ public class OpenGLPreviewGUI
     
     private void renderBlock(int x, int y, TetrisCell piece) { 
         if (piece.pieceType == TetrisPiece.NO_PIECE) return;
-        minos.drawPreview(x,y,piece);       
+        minos.drawSprite(x,y,piece,flipPreview);       
 
     }    
      
@@ -188,5 +191,11 @@ public class OpenGLPreviewGUI
     public boolean getMonochrome() {
         return monochrome;
     }
-    
+    public boolean isFlipPreview() {
+        return flipPreview;
+    }
+
+    public void setFlipPreview(boolean flipPreview) {
+        this.flipPreview = flipPreview;
+    }    
 }

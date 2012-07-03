@@ -150,7 +150,7 @@ public class TetrisBoard
         	    int y = blocks[count].y;
         
         	    fMatrix[x][y] = new TetrisCell(piece.getType(), sprite[count],
-                                                    blockRotate[count]);
+                                                    blockRotate[count],piece.getKeyPressed());                    
         	}
                     
         }
@@ -244,5 +244,15 @@ public class TetrisBoard
             }
         }
         return true;
+    }
+    
+    public void releaseKey(int key) {
+        for (int i = 0; i < fColumns; i++) {
+            for (int j = 0; j < fRows; j++) {
+                if (fMatrix[i][j].activeKey == key){
+                    fMatrix[i][j].activeKey = -1;
+                }
+            }
+        }
     }
 }

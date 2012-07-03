@@ -39,7 +39,15 @@ public class TetrisPiece
     private Point   fCentrePoint = new Point();
     private Point[] fBlocks      = new Point[4];
     private int[]   fBlockRotate = new int[4];
+    private int keyPressed = -1;
 
+    public int getKeyPressed() {
+        return keyPressed;
+    }
+
+    public void setKeyPressed(int keyPressed) {
+        this.keyPressed = keyPressed;
+    }
     public int[] getfBlockRotate() {
         return fBlockRotate;
     }

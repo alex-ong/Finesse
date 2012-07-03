@@ -20,28 +20,19 @@ class TextureAtlas {
     private int spriteWidth, spriteHeight;
     private int texWidth, texHeight;
     private int minoWidth = 20;
-    private boolean noRotate = false;
 
-    public boolean isNoRotate() {
-        return noRotate;
-    }
-
-    public void setNoRotate(boolean noRotate) {
-        this.noRotate = noRotate;
-    }
     
-    public Texture stack;
-    public Texture prev;
+
     private IntBuffer vertexBuffer = BufferUtils.createIntBuffer(8);
     private DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(256);
     
     private IntBuffer vertexBuffer_prev = BufferUtils.createIntBuffer(8);
     private DoubleBuffer textureBuffer_prev = BufferUtils.createDoubleBuffer(256);
+
+  
     
-    public void init(Texture stack, Texture prev, int tW, int tH, int sW, int sH)    
-    {
-        this.stack = stack;
-        this.prev = prev;
+    public void init(int tW, int tH, int sW, int sH)    
+    {       
         texWidth = tW;
         texHeight = tH;
         spriteWidth = sW;
@@ -70,7 +61,7 @@ class TextureAtlas {
     
     private int[] getCellFlip(int posX, int posY, int rotation){
         
-        if (rotation == 0 || noRotate)
+        if (rotation == 0)
         return new int[]{
             posX, posY,
             posX + minoWidth, posY,
@@ -143,53 +134,39 @@ class TextureAtlas {
         
         
     }
-    public void drawSprite(int posX, int posY, TetrisCell cell) {
+    private void drawMino(int posX, int posY, TetrisCell cell, 
+                        IntBuffer vBuf, DoubleBuffer tBuf,
+                        boolean flip) {
+        int verts[];
+        if (flip)
+            verts = getCellFlip(posX,posY,cell.orientationRotation);
+        else
+            verts = getCellFlip(posX,posY,0);
 
-        int verts[] = getCellFlip(posX,posY,cell.orientationRotation);
+        vBuf.clear();
+        vBuf.put(verts);        
 
-        vertexBuffer.clear();
-        vertexBuffer.put(verts);        
-
-        vertexBuffer.rewind();         
-        textureBuffer.position(cell.pieceType*8+cell.orientation*64);
+        vBuf.rewind();         
+        tBuf.position((cell.pieceType << 3) +(cell.orientation<<6));
 
         
         // ... Bind the texture, enable the proper arrays
         GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
         GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
         
-        GL11.glVertexPointer(2, 0, vertexBuffer);        
-        GL11.glTexCoordPointer(2, 0, textureBuffer);             
+        GL11.glVertexPointer(2, 0, vBuf);        
+        GL11.glTexCoordPointer(2, 0, tBuf);             
         
         GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);        
         
         GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
         GL11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+    }
+    
+    public void drawSprite(int posX, int posY, TetrisCell cell, boolean flip) {
+        drawMino(posX, posY, cell, vertexBuffer, textureBuffer, flip);
 
     }
 
-    void drawPreview(int posX, int posY, TetrisCell cell) {
-
-        int verts[] = getCellFlip(posX,posY,cell.orientationRotation);
-
-        vertexBuffer_prev.clear();
-        vertexBuffer_prev.put(verts);        
-
-        vertexBuffer_prev.rewind();         
-        textureBuffer_prev.position(cell.pieceType*8+cell.orientation*64);
-
-        
-        // ... Bind the texture, enable the proper arrays
-        GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-        GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
-        
-        GL11.glVertexPointer(2, 0, vertexBuffer_prev);        
-        GL11.glTexCoordPointer(2, 0, textureBuffer_prev);             
-        
-        GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);        
-        
-        GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
-        GL11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);        
-    }
              
 }

@@ -51,11 +51,9 @@ public class DisplayExample  {
             Display.setTitle("Finesse - Loading 15%");
             fTextures.init();
             
-            fTextureAtlas.init(fTextures.getStackMinos(),
-                               fTextures.getPreviewMinos(),
-                                    fTextures.getStackMinos().getImageWidth(),
-                                    fTextures.getStackMinos().getImageHeight(),
-                                    32, 32);
+            fTextureAtlas.init(fTextures.getStackMinos().getImageWidth(),
+                               fTextures.getStackMinos().getImageHeight(),
+                               32, 32);
             Display.setTitle("Finesse - Loading 30%");
             SoundCache.init();
             fGame.setTextures(fTextures);
