@@ -4,11 +4,7 @@
  */
 
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import javax.swing.JPanel;
 
 /**
  *
@@ -175,7 +171,7 @@ public class OpenGLPreviewGUI
     
     private void renderBlock(int x, int y, TetrisCell piece) { 
         if (piece.pieceType == TetrisPiece.NO_PIECE) return;
-        minos.drawSprite(x,y,piece);       
+        minos.drawPreview(x,y,piece);       
 
     }    
      

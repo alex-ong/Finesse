@@ -30,13 +30,18 @@ class TextureAtlas {
         this.noRotate = noRotate;
     }
     
-    public Texture t;
+    public Texture stack;
+    public Texture prev;
     private IntBuffer vertexBuffer = BufferUtils.createIntBuffer(8);
     private DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(256);
     
-    public void init(Texture t, int tW, int tH, int sW, int sH)    
+    private IntBuffer vertexBuffer_prev = BufferUtils.createIntBuffer(8);
+    private DoubleBuffer textureBuffer_prev = BufferUtils.createDoubleBuffer(256);
+    
+    public void init(Texture stack, Texture prev, int tW, int tH, int sW, int sH)    
     {
-        this.t = t;
+        this.stack = stack;
+        this.prev = prev;
         texWidth = tW;
         texHeight = tH;
         spriteWidth = sW;
@@ -58,6 +63,7 @@ class TextureAtlas {
                 tx, ty + th
             };
             textureBuffer.put(texVerts);
+            textureBuffer_prev.put(texVerts);
         }
         
     }
@@ -160,6 +166,30 @@ class TextureAtlas {
         GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
         GL11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
 
-    }        
+    }
+
+    void drawPreview(int posX, int posY, TetrisCell cell) {
+
+        int verts[] = getCellFlip(posX,posY,cell.orientationRotation);
+
+        vertexBuffer_prev.clear();
+        vertexBuffer_prev.put(verts);        
+
+        vertexBuffer_prev.rewind();         
+        textureBuffer_prev.position(cell.pieceType*8+cell.orientation*64);
+
+        
+        // ... Bind the texture, enable the proper arrays
+        GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+        GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+        
+        GL11.glVertexPointer(2, 0, vertexBuffer_prev);        
+        GL11.glTexCoordPointer(2, 0, textureBuffer_prev);             
+        
+        GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);        
+        
+        GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+        GL11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);        
+    }
              
 }

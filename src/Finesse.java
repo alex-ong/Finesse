@@ -27,7 +27,7 @@ public class DisplayExample  {
     
     final TextureHolder  fTextures = new TextureHolder();
     final TextureAtlas  fTextureAtlas = new TextureAtlas(); 
-    final InputParser fInputParser = new InputParser(fGame, fGame.getTextRenderer());
+    final GameInputParser fInputParser = new GameInputParser(fGame, fGame.getTextRenderer());
     final ReplayLoader fReplayLoader = new ReplayLoader();
     private int state = GAME_MENU;    
     private final static int GAME_MENU = 0;
@@ -46,32 +46,34 @@ public class DisplayExample  {
 	 * Start the example
 	 */
     public void start() {
-            Display.setTitle("KeyTris - Loading 0%");
+            Display.setTitle("Finesse - Loading 0%");
             initGL(720,480);
-            Display.setTitle("KeyTris - Loading 15%");
+            Display.setTitle("Finesse - Loading 15%");
             fTextures.init();
-            fTextureAtlas.init(fTextures.getMinos(),
-                                    fTextures.getMinos().getImageWidth(),
-                                    fTextures.getMinos().getImageHeight(),
+            
+            fTextureAtlas.init(fTextures.getStackMinos(),
+                               fTextures.getPreviewMinos(),
+                                    fTextures.getStackMinos().getImageWidth(),
+                                    fTextures.getStackMinos().getImageHeight(),
                                     32, 32);
-            Display.setTitle("KeyTris - Loading 30%");
+            Display.setTitle("Finesse - Loading 30%");
             SoundCache.init();
             fGame.setTextures(fTextures);
             fMenu.setTextures(fTextures);
             fOptions.setTextures(fTextures);
             fReplay.setTextures(fTextures);
-            Display.setTitle("KeyTris - Loading 45%");
+            Display.setTitle("Finesse - Loading 45%");
             fGame.setTextureAtlas(fTextureAtlas);  
-            Display.setTitle("KeyTris - Loading 60%");
+            Display.setTitle("Finesse - Loading 60%");
             fGame.init();
-            Display.setTitle("KeyTris - Loading 80%");
+            Display.setTitle("Finesse - Loading 80%");
             fMenu.init();
-            Display.setTitle("KeyTris - Loading 85%");
+            Display.setTitle("Finesse - Loading 85%");
             fOptions.init();
-            Display.setTitle("KeyTris - Loading 95%");
+            Display.setTitle("Finesse - Loading 95%");
             fReplay.init();
             fReplay.setGame(fGame);
-            Display.setTitle("KeyTris");
+            Display.setTitle("Finesse");
             
             fGame.setOptions(fOptions);
             while (true) {
@@ -194,10 +196,6 @@ public class DisplayExample  {
 
 }    
     
-
-
-
-    
     
     
     
@@ -207,11 +205,6 @@ public class DisplayExample  {
         displayExample.start();       
         
     }
-
-        
-	
-    
-    
     
     public static void main(String args[])
     {
@@ -221,10 +214,5 @@ public class DisplayExample  {
 
         
     }
-    
-
-    
-    
-        
    
 }

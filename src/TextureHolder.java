@@ -15,12 +15,18 @@ import org.newdawn.slick.util.ResourceLoader;
 public class TextureHolder {
         
     private Texture backdrop;      
-    private Texture minos;
+    private Texture stackMinos;
+    private Texture previewMinos;
+
+    public Texture getPreviewMinos() {
+        return previewMinos;
+    }
+    
     private Texture flash;
     private Texture mainMenuBackdrop;
     
-    public Texture getMinos() {
-        return minos;
+    public Texture getStackMinos() {
+        return stackMinos;
     }
     public Texture getBackdrop(){
         return backdrop;
@@ -37,7 +43,8 @@ public class TextureHolder {
         try {
                 // load texture from PNG file
             backdrop = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("backdrop.png"));         
-            minos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("minos.png"));    
+            stackMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("minos_stack.png"));    
+            previewMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("minos_preview.png"));    
             flash = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("flash.png"));
             mainMenuBackdrop = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("mainmenu.png"));
         } catch (IOException e) {

@@ -96,7 +96,7 @@ public class TetrisGame
         * @return The system time in milliseconds
         */
     public long getTime() {
-        return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+        return System.nanoTime()/1000000;
     }
     public long getGameTimer(){
         return currentFrame - gameStartFrame;
@@ -107,7 +107,9 @@ public class TetrisGame
         if (fGameState == GAME_PLAYING) {
             currentFrame = getTime(); // call before loop to initialise fps time        
         }
-        fBoardGUI.render();        
+        fBoardGUI.render();
+        //bind texture once here.
+        fBoardGUI.getTextureAtlas().prev.bind();
         fNowPreview.render();
         for (int i = 0; i < NUM_PREVIEWS; i++){
             fPreviews[i].render();
