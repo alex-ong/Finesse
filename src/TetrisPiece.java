@@ -9,7 +9,7 @@ import java.awt.Point;
  */
 public class TetrisPiece
 {
-    public static final int NO_PIECE = -1;
+    public static final byte NO_PIECE = -1;
     public static final int I_PIECE   = 0;
     public static final int O_PIECE   = 1;
     public static final int S_PIECE   = 2;
@@ -40,7 +40,14 @@ public class TetrisPiece
     private Point[] fBlocks      = new Point[4];
     private int[]   fBlockRotate = new int[4];
     private int keyPressed = -1;
-
+    
+    public TetrisPiece (TetrisPiece old) {
+	fType  = old.fType;
+        fBoard = old.fBoard;
+        fAlignment = old.fAlignment;
+    	initializeBlocks();        
+    }
+    
     public int getKeyPressed() {
         return keyPressed;
     }

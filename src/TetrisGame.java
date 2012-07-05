@@ -1,7 +1,9 @@
 
 
+
 import java.util.LinkedList;
 import java.util.Vector;
+import org.newdawn.slick.Color;
 /**
  * A generic Tetris game with no GUI.
  * 
@@ -17,7 +19,7 @@ public class TetrisGame
     private OpenGLPreviewGUI fHoldPreview;
     private OpenGLPreviewGUI fNowPreview;    
     private boolean[] countdowns = new boolean[3];
-    private int          fScore;
+
     private int          fTotalLines;    
     private int          fGameState = GAME_COUNTDOWN;
     public boolean printReplay = true;
@@ -56,6 +58,10 @@ public class TetrisGame
     private int fKeys;
     private int[] pieceStats = new int[7];
     private String loadPieces;
+    private TetrisGameState previousMove = null;    
+    
+    
+    
     /**
      * Create a TetrisGame.
      */
@@ -111,6 +117,7 @@ public class TetrisGame
         fBoardGUI.render();
         //bind texture once here.
         fTextures.getPreviewMinos().bind();
+        Color.white.bind();
         fNowPreview.render();
         for (int i = 0; i < NUM_PREVIEWS; i++){
             fPreviews[i].render();
@@ -168,7 +175,6 @@ public class TetrisGame
         pieceAlignment = options.getSetting(OptionsMenu.GET_ALIGNMENT);
         initRandomizer();
         fTotalLines = 0;
-        fScore      = 0;
         fGameState = GAME_COUNTDOWN;
         fCurrPiece  = null;
         fKeys = 0;
@@ -278,8 +284,37 @@ public class TetrisGame
         fCurrPiece = currPiece;
     }
 
-
-   
+    private void shiftPreviewsBack(){
+        morePieces.push(fPreviews[NUM_PREVIEWS-1].getPiece());
+        for (int i = NUM_PREVIEWS - 1; i > 0; i--) {
+            fPreviews[i].setPiece(fPreviews[i-1].getPiece());
+        }
+    }
+   public void undo() {
+    if (previousMove == null) return;
+    if (!(fGameState == GAME_PLAYING)) return;
+    fBoard.copy(previousMove.fBoard);
+    fTotalLines = previousMove.fTotalLines;
+    for (int i = 0; i < 7; i++) {
+        pieceStats[i] = previousMove.pieceStats[i];
+    }
+    if (!(fPieces == previousMove.fPieces)) {   
+        shiftPreviewsBack();
+        fPreviews[0].setPiece(fCurrPiece.getType());
+        fPieces = previousMove.fPieces;
+    }
+        fCurrPiece = previousMove.fCurrPiece;
+        fHoldPiece = previousMove.fHoldPiece;
+        fNowPreview.setPiece(fCurrPiece.getType());
+        if (fHoldPiece == null) {
+            fHoldPreview.setPiece(TetrisPiece.NO_PIECE);
+            
+        } else {
+            fHoldPreview.setPiece(fHoldPiece.getType());
+        }
+        previousMove = null;
+        SoundCache.getUndo().playAsSoundEffect((float)1.0, (float)1.0, false);
+   }
 
 
     public int getGameState(){
@@ -288,6 +323,7 @@ public class TetrisGame
     
     public void hold() {
         if (!(fGameState == GAME_PLAYING)) return;
+        previousMove = new TetrisGameState(this);
         if (fHoldPiece == null ) {            
             fHoldPiece = fCurrPiece;
             fCurrPiece = null;      
@@ -309,8 +345,9 @@ public class TetrisGame
         fBoard.releaseKey(key);
     }
     
-    public void typer(int column, int rotation, int key) {
+    public void typer(int column, int rotation, int key) {        
         if (!(fGameState == GAME_PLAYING)) return;
+        previousMove = new TetrisGameState(this);
         fHoldPreview.setMonochrome(false);
         SoundCache.getColumn(column).playAsSoundEffect((float)1.0, (float)1.0, false);
         //rotate then move 
@@ -366,25 +403,7 @@ public class TetrisGame
         return result;
     }
 
-    /**
-     * Returns the current score.
-     * 
-     * @return The current score.
-     */
-    public int getScore()
-    {
-	    return fScore;
-    }
 
-    /**
-     * Set the current score.
-     * 
-     * @param score  The current score.
-     */
-    public void setScore(int score)
-    {
-        fScore = score;
-    }
 
     /**
      * Returns the number of completed lines so far in
@@ -485,7 +504,7 @@ public class TetrisGame
                 new TetrisPiece(fPreviews[0].getPiece(), 
                                 board, 
                                 pieceAlignment);
-        
+        Color.white.bind();
         fNowPreview.setPiece(fPreviews[0].getPiece());
         fNowPreview.render();        
         for (int i = 0; i < NUM_PREVIEWS - 1; ++i){
@@ -628,5 +647,9 @@ public class TetrisGame
     }
     public OptionsMenu getOptions() {
         return options;
+    }
+
+    public TetrisPiece getHoldPiece() {
+        return fHoldPiece;
     }
 }

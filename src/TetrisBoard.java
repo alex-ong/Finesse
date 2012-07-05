@@ -22,6 +22,8 @@ public class TetrisBoard
     
     public static final int xSpawn = 4;
     public static final int ySpawn = 2;
+
+    
     /**
      * Create a TetrisBoard with the desired number
      * of columns and rows.
@@ -35,6 +37,14 @@ public class TetrisBoard
         fRows    = rows;
         fInvisRows = invisRows;
         resetBoard();
+    }
+
+    TetrisBoard(TetrisBoard tetrisBoard) {
+        fColumns = tetrisBoard.fColumns;
+        fRows = tetrisBoard.fRows;
+        fInvisRows = tetrisBoard.fInvisRows;
+        fMatrix = new TetrisCell[fColumns][fRows];
+        copy(tetrisBoard);
     }
 
     /**
@@ -255,4 +265,14 @@ public class TetrisBoard
             }
         }
     }
+        
+
+    void copy(TetrisBoard fBoard) {
+        for (int i = 0; i < fColumns; i++) {
+            for (int j = 0; j < fRows; j++) {
+                this.fMatrix[i][j] = new TetrisCell(fBoard.fMatrix[i][j]);
+            }
+        }        
+    }
+    
 }

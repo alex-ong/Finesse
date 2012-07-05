@@ -280,7 +280,7 @@ public class TextRenderer {
         DecimalFormat df = new DecimalFormat("0.00");
         double KPT = (double)keys/pieces;
         if (pieces == 0) KPT = 0;
-       int advance = font.getWidth(df.format(TPM));
+       int advance = font.getWidth(df.format(KPT));
         font.drawString(StartStatsX - advance, StartStatsY + 200, 
                 df.format(KPT), Color.white);    
     }

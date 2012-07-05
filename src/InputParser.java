@@ -57,6 +57,7 @@ public  class InputParser {
             case Keyboard.KEY_PERIOD: fGame.typer(8, TetrisPiece.CW, key); fTextRenderer.keyDown(8, 3,'.'); break;   
             case Keyboard.KEY_SLASH: fGame.typer(9, TetrisPiece.CW, key); fTextRenderer.keyDown(9, 3,'/'); break;   
             case Keyboard.KEY_SPACE: fGame.hold(); fTextRenderer.spaceDown();break;
+            case Keyboard.KEY_BACK: fGame.undo();break;
             case Keyboard.KEY_RETURN: 
                 fGame.stopGame();
                 fGame.countDownGame();
@@ -65,6 +66,7 @@ public  class InputParser {
             case Keyboard.KEY_ESCAPE:
                 fGame.setMenu(true);
                 break; 
+
        }
     }
     public static void keyUp(TetrisGame fGame, TextRenderer fTextRenderer, int key){
