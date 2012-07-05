@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.io.IOException;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -43,15 +44,15 @@ public class TextureHolder {
         return mainMenuBackdrop;
     }
     public void init() {
-
+        char c = File.separatorChar;
         try {
                 // load texture from PNG file
-            backdrop = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("backdrop.png"));         
-            stackMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("minos_stack.png"));    
-            previewMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("minos_preview.png"));    
-            activeMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("minos_active.png")); 
-            flash = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("flash.png"));
-            mainMenuBackdrop = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream("mainmenu.png"));
+            backdrop = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(c + "res"+ c + "backdrop.png"));         
+            stackMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(c + "res" + c + "minos_stack.png"));    
+            previewMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(c + "res" + c+ "minos_preview.png"));    
+            activeMinos = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(c + "res" + c+ "minos_active.png")); 
+            flash = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(c + "res" + c + "flash.png"));
+            mainMenuBackdrop = TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(c + "res" + c + "mainmenu.png"));
         } catch (IOException e) {
                 e.printStackTrace();
         }

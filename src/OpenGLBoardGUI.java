@@ -78,7 +78,7 @@ public class OpenGLBoardGUI {
             final int numCols = fBoard.getColumns();
             final int numRows = fBoard.getRows();                        
             final int startRow = fBoard.getInvisRows();            
-            Color.black.bind();
+            Color.white.bind();
             
                 for (int cols = 0; cols < numCols; cols++) 
                 {

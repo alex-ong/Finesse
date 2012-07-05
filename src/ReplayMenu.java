@@ -101,7 +101,9 @@ class ReplayMenu {
 	}	
         rl = new ReplayLoader();
         fc = new JFileChooser();
-        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        String s = File.separatorChar + "rep" + File.separatorChar;        
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir")+s));
+        
         FileFilter ff = new OnlyExt("rep");
         fc.setFileFilter(ff);
     }    

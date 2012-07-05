@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.io.IOException;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -45,16 +46,16 @@ public class SoundCache {
     }
     
     public static void init() {
-
+        String s = File.separatorChar + "res" + File.separatorChar;
         try {
 	    for (int i = 0; i < 10; i++){
-                waves[i] = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("col" + i + ".wav"));
+                waves[i] = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(s + "col" + i + ".wav"));
             }
-            hold = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("hold.wav"));
-            countdown1 = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("countdown3.wav"));
-            countdown3 = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("countdown1.wav"));
-            gameClear = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("gameclear.wav"));
-            undo = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("undo.wav"));
+            hold = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(s + "hold.wav"));
+            countdown1 = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(s + "countdown3.wav"));
+            countdown3 = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(s + "countdown1.wav"));
+            gameClear = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(s + "gameclear.wav"));
+            undo = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(s + "undo.wav"));
         } catch (IOException e) {
 	    e.printStackTrace();
 	}

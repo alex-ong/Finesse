@@ -83,9 +83,8 @@ public class ReplayMaker {
         SimpleDateFormat formatter= 
         new SimpleDateFormat("dd_MM_yyyy-HH_mm_SS");
         String dateNow = formatter.format(currentDate.getTime());
-        
-        
-        String filename = System.getProperty("user.dir") + "/" +
+                
+        String filename = System.getProperty("user.dir") + "/rep/" +
                 win + "_" + actions.get(actions.size()-1).time + "_" 
                 + dateNow + ".rep";
         try {                       

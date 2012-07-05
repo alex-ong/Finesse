@@ -41,7 +41,7 @@ public class TetrisGame
     private int randomizer      = 1;
     public static final int PURE_RANDOMIZER = 0;
     public static final int BAG_RANDOMIZER = 1;
-    public static final int LOAD_RANDOMIZER = 2;
+    public static final int LOAD_RANDOMIZER = 3;
     public final static int NUM_PREVIEWS = 9;
     private int pieceAlignment = TetrisPiece.CENTER_ALIGNED;
     private LinkedList<Integer> morePieces = null;
