@@ -10,7 +10,7 @@
 <project name="Finesse" default="default" basedir=".">
     <description>Builds, tests, and runs the project Finesse.</description>
     <import file="nbproject/build-impl.xml"/>
-    <target name="-pre-jar">
+    <target name="-post-jar">
 
         <echo>Copying resources files to build directory...</echo>
 
@@ -18,9 +18,13 @@
 
         <copy todir="${dist.jar.dir}/res">
 
-            <fileset dir="resources" includes="**"/>
+            <fileset dir="res" includes="**"/>
 
         </copy>
+        
+        <echo>Creating replay folder</echo>
+        <mkdir dir="${dist.jar.dir}/rep"/>
+
 
     </target>
 </project>
