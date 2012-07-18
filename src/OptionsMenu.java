@@ -29,7 +29,7 @@ class OptionsMenu {
                                               "Rotate SpriteSheet - Preview",
                                               "Rotate SpriteSheet - Active",
                                               "Return to Main Menu"};
-    private String[][] values = { {"Pure", "Bag", "History 6"},
+    private String[][] values = { {"Pure", "Bag", "History 6", "Bag+"},
                                          {"Left", "Right", "Center"},
                                          {"No", "Yes"},
                                          {"ALL"},
@@ -92,6 +92,13 @@ class OptionsMenu {
                 values[i][selections[i]], getColor(i)); 
        }
        
+    }
+    
+    public void loadSettings() {
+        //@TODO
+    }
+    public void writeSettings(){
+        //@TODO
     }
     public void init() {
 	// load font from a .ttf file

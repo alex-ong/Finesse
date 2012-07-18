@@ -41,7 +41,9 @@ public class TetrisGame
     private int randomizer      = 1;
     public static final int PURE_RANDOMIZER = 0;
     public static final int BAG_RANDOMIZER = 1;
-    public static final int LOAD_RANDOMIZER = 3;
+    public static final int HISTORY_RANDOMIZER = 2;
+    public static final int BAG_PLUS_RANDOMIZER = 3;
+    public static final int LOAD_RANDOMIZER = 4;
     public final static int NUM_PREVIEWS = 9;
     private int pieceAlignment = TetrisPiece.CENTER_ALIGNED;
     private LinkedList<Integer> morePieces = null;
@@ -536,41 +538,21 @@ public class TetrisGame
     private void fillPieces() {
         // now fill previews.
         if (randomizer == PURE_RANDOMIZER) {
-            fillPureRandomizer();
+            morePieces = Randomizers.fillPureRandomizer();
         } else if (randomizer == BAG_RANDOMIZER) {
-            fillBagRandomizer();
+            morePieces = Randomizers.fillBagRandomizer();
+        } else if (randomizer == HISTORY_RANDOMIZER) {
+            morePieces = Randomizers.fillHistoryRandomizer();            
+        } else if (randomizer == BAG_PLUS_RANDOMIZER) {
+            morePieces = Randomizers.fillBagPlusRandomizer();                        
         } else {
-            fillLoadRandomizer();
+            morePieces = Randomizers.fillLoadRandomizer(loadPieces);
         }
         //now add pieces to replaymaker
         for (int i: morePieces){
             fReplayMaker.addPiece(i);
         }
         
-        
-    }
-    
-    private void fillPureRandomizer() {
-        morePieces = new LinkedList<Integer>();
-        for (int i = 0; i < 100; i++) {
-            morePieces.add((int)(Math.random() * 7));   
-        }
-    }
-    
-    private void fillBagRandomizer() {
-        morePieces = new LinkedList<Integer>();
-        Vector<Integer> newBag = new Vector<Integer>();
-        //fill bag
-        for (int i = 0; i < 7; i++){
-            newBag.add(i);
-        }
-        //grab contents out of bag and onto queue.
-        while (newBag.size() > 0) {
-            int tmp = (int)(Math.random() * newBag.size());
-            
-            morePieces.add(newBag.get(tmp));
-            newBag.remove(tmp);
-        }
         
     }
     
@@ -594,12 +576,7 @@ public class TetrisGame
         }
         
     }
-    private void setLoadRandomizer(String s) {
-        morePieces = PieceStringParser.parsePieces(s);
-    }
-    private void fillLoadRandomizer() {
-        setLoadRandomizer(loadPieces);
-    }
+   
 
     
     void checkCountdown() {
