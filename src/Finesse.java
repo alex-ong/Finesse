@@ -23,7 +23,7 @@ public class DisplayExample  {
     final TetrisMenu     fMenu        = new TetrisMenu();
     final OptionsMenu    fOptions     = new OptionsMenu();
     final ReplayMenu     fReplay      = new ReplayMenu();    
-    //final CreditsMenu    fCredits     = new CreditsMenu();
+    
     
     final TextureHolder  fTextures = new TextureHolder();
     final TextureAtlas  fTextureAtlas = new TextureAtlas(); 
@@ -33,9 +33,8 @@ public class DisplayExample  {
     private final static int GAME_MENU = 0;
     private final static int GAME_PLAY = 1;
     private final static int OPTIONS = 2;
-    private final static int REPLAY = 3;
-    private final static int CREDITS = 4;
-    private final static int QUIT = 5;
+    private final static int REPLAY = 3;    
+    private final static int QUIT = 4;
     private boolean stateChange = false;
     public DisplayExample(String args[]){
         if (args.length > 0) {
@@ -71,7 +70,7 @@ public class DisplayExample  {
             Display.setTitle("Finesse - Loading 95%");
             fReplay.init();
             fReplay.setGame(fGame);
-            Display.setTitle("Finesse");
+            Display.setTitle("Finesse  v1.0");
             
             fGame.setOptions(fOptions);
             while (true) {
@@ -92,9 +91,6 @@ public class DisplayExample  {
                                 fMenu.reset();
                             break;
                             case REPLAY:
-                                fMenu.reset();
-                            break;
-                            case CREDITS:
                                 fMenu.reset();
                             break;
                             case QUIT:                                   
@@ -206,7 +202,7 @@ public class DisplayExample  {
     
     public static void main(String args[])
     {
-        System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
+        //System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
         //make sure u copy the dlls!
         new Finesse(args);
 

@@ -169,6 +169,7 @@ public class TetrisGame
      */
     public void countDownGame()
     {
+        previousMove = null;
         fReplayMaker.reset();
         fTextRenderer.reset();        
         fMenu = false;

@@ -244,9 +244,7 @@ class ReplayMenu {
 
     int returnVal = fc.showOpenDialog(null);
         if(returnVal == JFileChooser.APPROVE_OPTION) {
-        System.out.println("You chose to open this file: " +
-                fc.getSelectedFile().getAbsolutePath());
-            
+           
             if (rl.load(fc.getSelectedFile().getAbsolutePath())){
                 playingReplay = true;
                 rip.playReplay(rl);

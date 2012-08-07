@@ -21,7 +21,7 @@ import org.newdawn.slick.util.ResourceLoader;
 class TetrisMenu {
     private boolean gameStart = false;
     private int selection = 0;
-    private static final String[] strings = {"Start Game", "Options", "Replay", "Credits", "Quit"};
+    private static final String[] strings = {"Start Game", "Options", "Replay", "Quit"};
     private static boolean MouseDown = false;
     private static final int startX = 300;
     private static final int startY = 200;
@@ -29,8 +29,7 @@ class TetrisMenu {
     private static final int NUM_SELECTIONS = strings.length;
     public static final int START_GAME = 0;
     public static final int OPTIONS = 1;
-    public static final int REPLAY = 2;
-    public static final int CREDITS = 3;
+    public static final int REPLAY = 2;    
     public static final int QUIT = 4;
     TrueTypeFont font;
     public boolean start(){
