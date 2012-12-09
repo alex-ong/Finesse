@@ -1,11 +1,6 @@
 
 import org.lwjgl.input.Keyboard;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Alex
@@ -30,7 +25,8 @@ public class InputLoader {
         }
     }
     
-    private static int[] keyCodes = 
+    
+    public static int[] keyCodes = 
     {
         Keyboard.KEY_1,
         Keyboard.KEY_2, 
