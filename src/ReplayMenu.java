@@ -217,7 +217,7 @@ class ReplayMenu {
     }
 
     private void stopReplay() {
-        fGame.stopGame();
+        fGame.stopGame();        
         playingReplay = false;
     }
     

@@ -61,7 +61,7 @@ public class TetrisGame
     private int[] pieceStats = new int[7];
     private String loadPieces;
     private TetrisGameState previousMove = null;    
-    
+    private boolean canUndo;
     
     
     /**
@@ -176,6 +176,7 @@ public class TetrisGame
         fBoard.resetBoard();
         randomizer = options.getSetting(OptionsMenu.GET_RANDOMIZER);
         pieceAlignment = options.getSetting(OptionsMenu.GET_ALIGNMENT);
+        canUndo = (options.getSetting(OptionsMenu.GET_UNDO) == 1);
         initRandomizer();
         fTotalLines = 0;
         fGameState = GAME_COUNTDOWN;
@@ -294,6 +295,7 @@ public class TetrisGame
         }
     }
    public void undo() {
+    if (!canUndo) return;
     if (previousMove == null) return;
     if (!(fGameState == GAME_PLAYING)) return;
     fBoard.copy(previousMove.fBoard);

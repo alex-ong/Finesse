@@ -42,10 +42,21 @@ public class ReplayLoader {
         File file = new File(filename);
         try{
         Scanner input = new Scanner(file);
-
+        
+        int i = 0;
+        int j = InputLoader.keyCodes.length;
+        
         while(input.hasNext()) {
             String nextLine = input.nextLine();
+            //keybinds
+            if (i < j) {
+                InputLoader.keyCodes[i] = Integer.parseInt(nextLine);
+                i++;
+                continue;
+            }
+            
             nextLine = textEncryptor.decrypt(nextLine);
+            
             if (nextLine.equals("game start")) continue;            
             String[] splits = nextLine.split("\\s+");
             if (splits.length == 1) {

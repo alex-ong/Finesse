@@ -23,18 +23,19 @@ public class DisplayExample  {
     final TetrisMenu     fMenu        = new TetrisMenu();
     final OptionsMenu    fOptions     = new OptionsMenu();
     final ReplayMenu     fReplay      = new ReplayMenu();    
-    
+    final KeyBindMenu    fKeyBindMenu = new KeyBindMenu();
     
     final TextureHolder  fTextures = new TextureHolder();
     final TextureAtlas  fTextureAtlas = new TextureAtlas(); 
     final GameInputParser fInputParser = new GameInputParser(fGame, fGame.getTextRenderer());
     final ReplayLoader fReplayLoader = new ReplayLoader();
     private int state = GAME_MENU;    
-    private final static int GAME_MENU = 0;
-    private final static int GAME_PLAY = 1;
-    private final static int OPTIONS = 2;
-    private final static int REPLAY = 3;    
-    private final static int QUIT = 4;
+    public final static int GAME_MENU = 0;
+    public final static int GAME_PLAY = 1;
+    public final static int OPTIONS = 2;
+    public final static int REPLAY = 3;    
+    public final static int QUIT = 4;
+    public final static int KEYBIND = 5;
     private boolean stateChange = false;
     public DisplayExample(String args[]){
         if (args.length > 0) {
@@ -59,6 +60,8 @@ public class DisplayExample  {
             fMenu.setTextures(fTextures);
             fOptions.setTextures(fTextures);
             fReplay.setTextures(fTextures);
+            fKeyBindMenu.setTextures(fTextures);
+            
             Display.setTitle("Finesse - Loading 45%");
             fGame.setTextureAtlas(fTextureAtlas);  
             Display.setTitle("Finesse - Loading 60%");
@@ -67,12 +70,15 @@ public class DisplayExample  {
             fMenu.init();
             Display.setTitle("Finesse - Loading 85%");
             fOptions.init();
+            fKeyBindMenu.init();
             Display.setTitle("Finesse - Loading 95%");
             fReplay.init();
             fReplay.setGame(fGame);
-            Display.setTitle("Finesse  v1.0");
+            Display.setTitle("Finesse  v1.0b");
             
             fGame.setOptions(fOptions);
+            fOptions.loadSettings();
+            fKeyBindMenu.loadSettings();
             while (true) {
                     GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
                     if (stateChange){
@@ -122,10 +128,18 @@ public class DisplayExample  {
                         fOptions.pollInput();
                         if(fOptions.exit()){
                             fOptions.reset();
-                            state = GAME_MENU;
+                            state = fOptions.whichState();
+                            System.out.println(state);
                             stateChange = true;
                         }
-                       
+                    } else if (state == KEYBIND) {
+                        fKeyBindMenu.render();
+                        fKeyBindMenu.pollInput();
+                        if(fKeyBindMenu.exit()){
+                            fKeyBindMenu.reset();
+                            state = OPTIONS;
+                            stateChange = true;
+                        }
                     } else if (state == REPLAY) {
                         fReplay.render();
                         fReplay.pollInput();
@@ -137,7 +151,7 @@ public class DisplayExample  {
                     }
                     
                     Display.update();
-                    Display.sync(120);
+                    Display.sync(10000);
                     if (Display.isCloseRequested()) {                            
                             AL.destroy();
                             Display.destroy();
@@ -163,6 +177,7 @@ public class DisplayExample  {
 			//Display.setVSyncEnabled(true);
 
 		} catch (LWJGLException e) {
+                        System.out.println(e);
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -202,7 +217,7 @@ public class DisplayExample  {
     
     public static void main(String args[])
     {
-        //System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
+        System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
         //make sure u copy the dlls!
         new Finesse(args);
 

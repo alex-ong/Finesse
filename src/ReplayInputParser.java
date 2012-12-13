@@ -22,6 +22,7 @@ public class ReplayInputParser {
         fTextRenderer = renderer;
     }
     public void playReplay(ReplayLoader rl){
+        currentAction = 0;
         fReplayLoader = rl;
         fGame.countDownGame();        
         fGame.printReplay = false;

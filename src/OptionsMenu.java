@@ -1,8 +1,9 @@
 
 import java.awt.Font;
-import java.io.InputStream;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -22,12 +23,15 @@ import org.newdawn.slick.util.ResourceLoader;
  */
 class OptionsMenu {
     private boolean exit = false;
+    private int whichState = Finesse.DisplayExample.GAME_MENU;
     private int selection = 0;
     private static final String[] captions = {"Randomizer", "Alignment", "Auto Save Replays", 
                                               "Save Replay Min Time", "Save full replays only", 
                                               "Rotate SpriteSheet - Board",
                                               "Rotate SpriteSheet - Preview",
                                               "Rotate SpriteSheet - Active",
+                                              "Allow Undo",
+                                              "Change Keys",
                                               "Return to Main Menu"};
     private String[][] values = { {"Pure", "Bag", "History 6", "Bag+"},
                                          {"Left", "Right", "Center"},
@@ -36,10 +40,12 @@ class OptionsMenu {
                                          {"No", "Yes"},
                                          {"No", "Yes"},
                                          {"No", "Yes"},
-                                         {"No", "Yes"},                                         
+                                         {"No", "Yes"},
+                                         {"No", "Yes"},
+                                         {""},
                                          {""}};
     private static boolean MouseDown = false;
-    private static int selections[] = {1,2,1,0,1,0,0,0,0};
+    private static int selections[] = {1,2,1,0,1,0,0,0,0,0,0};
     private static final int startX = 50;
     private static final int startY = 100;
     private static final int lineHeight = 30;
@@ -55,6 +61,7 @@ class OptionsMenu {
     public static final int GET_TEXTURE_ROTATE_BOARD = 5;
     public static final int GET_TEXTURE_ROTATE_PREVIEW = 6;
     public static final int GET_TEXTURE_ROTATE_ACTIVE = 7;
+    public static final int GET_UNDO = 8;
     public int getSetting(int setting) {
         return selections[setting];    
     }
@@ -95,11 +102,40 @@ class OptionsMenu {
     }
     
     public void loadSettings() {
-        //@TODO
+        String filename = System.getProperty("user.dir") + "/config.ini";
+        File file = new File(filename);
+        try{
+            Scanner input = new Scanner(file);        
+            int i = 0;
+            while(input.hasNext()) {
+                String nextLine = input.nextLine();
+                selections[i] = Integer.parseInt(nextLine);
+                i++;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
-    public void writeSettings(){
-        //@TODO
+    private void writeSettings(){
+        String filename = System.getProperty("user.dir") + "/config.ini";
+        try {                       
+            BufferedWriter bw = new BufferedWriter(
+                                new OutputStreamWriter(
+                                new FileOutputStream(filename),"UTF-8"));
+            outputData(bw);
+            bw.close();
+        } catch (Exception e){
+            System.out.println(e);
+        } 
     }
+    
+    private void outputData(BufferedWriter bw) throws IOException{
+        for (int i : selections){
+            bw.write(Integer.toString(i));
+            bw.newLine();
+        }
+    }
+    
     public void init() {
 	// load font from a .ttf file
     
@@ -150,6 +186,7 @@ class OptionsMenu {
                 switch(key){        
                     case Keyboard.KEY_ESCAPE:
                         exit = true;
+                        whichState=Finesse.DisplayExample.GAME_MENU;
                         break;
                     case Keyboard.KEY_RETURN: 
                         enterSelection();
@@ -211,6 +248,12 @@ class OptionsMenu {
     }
     private void enterSelection(){
         if (selection == (captions.length - 1)) { //if exit            
+            whichState = Finesse.DisplayExample.GAME_MENU;
+            writeSettings();
+            exit = true;            
+            return;
+        } else if (selection == (captions.length - 2)) { //if change keys           
+            whichState = Finesse.DisplayExample.KEYBIND;
             exit = true;
             return;
         }
@@ -231,5 +274,9 @@ class OptionsMenu {
         } else if (selections[selection] < 0){
             selections[selection] = values[selection].length - 1; 
         }
+    }
+
+    public int whichState() {
+        return whichState;
     }
 }

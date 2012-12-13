@@ -49,7 +49,10 @@ public class ReplayMaker {
         actions.clear();
     }
     public void outputData(BufferedWriter f) throws IOException{
-       
+        for (int i : InputLoader.keyCodes){
+            f.append(Integer.toString(i));
+            f.newLine();
+        }
         f.append(textEncryptor.encrypt("game start")); 
         f.newLine();
         f.append(textEncryptor.encrypt("Alignment "+alignment));
@@ -59,6 +62,7 @@ public class ReplayMaker {
             s+= PieceStringParser.parsePiece(pieces[i]);
 
         }
+        //f.append(s);
         f.append(textEncryptor.encrypt(s));
         f.newLine();
         outputActions(f);
@@ -118,7 +122,9 @@ public class ReplayMaker {
     }
 
     private void outputActions(BufferedWriter f) throws IOException {
-        for (Action a: actions) {            
+               
+        for (Action a: actions) { 
+            //f.append(a.toString());
             f.append(textEncryptor.encrypt(a.toString()));
             f.newLine();
         }
