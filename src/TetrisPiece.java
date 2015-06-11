@@ -73,6 +73,7 @@ public class TetrisPiece
      * 
      * @param type   The type/shape of the piece.
      * @param board  The board the piece is going to move around in.
+     * @param alignment The alignment (left/right/center) of the piece.
      */
     public TetrisPiece(int type, TetrisBoard board, int alignment)
     {

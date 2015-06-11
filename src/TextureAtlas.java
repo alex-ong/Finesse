@@ -19,15 +19,15 @@ import org.newdawn.slick.opengl.Texture;
 class TextureAtlas {
     private int spriteWidth, spriteHeight;
     private int texWidth, texHeight;
-    private int minoWidth = 20;
+    private final int minoWidth = 20;
 
     
 
-    private IntBuffer vertexBuffer = BufferUtils.createIntBuffer(8);
-    private DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(256);
+    private final IntBuffer vertexBuffer = BufferUtils.createIntBuffer(8);
+    private final DoubleBuffer textureBuffer = BufferUtils.createDoubleBuffer(256);
     
-    private IntBuffer vertexBuffer_prev = BufferUtils.createIntBuffer(8);
-    private DoubleBuffer textureBuffer_prev = BufferUtils.createDoubleBuffer(256);
+    private final IntBuffer vertexBuffer_prev = BufferUtils.createIntBuffer(8);
+    private final DoubleBuffer textureBuffer_prev = BufferUtils.createDoubleBuffer(256);
 
   
     

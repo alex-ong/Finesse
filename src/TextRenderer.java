@@ -71,7 +71,8 @@ public class TextRenderer {
     private ArrayList<ScoreKeeper.Score> scores = null;
     private int[] pieceStats = null;;
     
-    public void reset(){
+    @SuppressWarnings("unchecked")
+    public void reset(){        
         keysPressed = new ArrayList[10];
         
         for (int i = 0; i < 10; i++){
@@ -86,6 +87,8 @@ public class TextRenderer {
         spaceDown = false;
         
     }
+    
+    @SuppressWarnings("unchecked")
     public void init(TextureHolder th) {
 	// load font from a .ttf file
         this.th = th;

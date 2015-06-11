@@ -1,5 +1,4 @@
 
-import java.util.LinkedList;
 
 /*
  * 
@@ -8,27 +7,25 @@ import java.util.LinkedList;
  * 
  */
 public class TetrisGameState {
-    
-    public TetrisBoard  fBoard;
-    public TetrisPiece  fCurrPiece;
-    public TetrisPiece  fHoldPiece = null;      
-    public int          fTotalLines;    
+
+    public TetrisBoard fBoard;
+    public TetrisPiece fCurrPiece;
+    public TetrisPiece fHoldPiece = null;
+    public int fTotalLines;
     public int fPieces;
-    public int[] pieceStats = new int[7];    
-    
+    public int[] pieceStats = new int[7];
+
     public TetrisGameState(TetrisGame old) {
         fBoard = new TetrisBoard(old.getTetrisBoard());
         fCurrPiece = new TetrisPiece(old.getCurrentPiece());
-        fHoldPiece = (old.getHoldPiece() == null) ? null : 
-                     new TetrisPiece(old.getHoldPiece());        
+        fHoldPiece = (old.getHoldPiece() == null) ? null
+                : new TetrisPiece(old.getHoldPiece());
         fTotalLines = old.getTotalLines();
         fPieces = old.getPieces();
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 7; i++) {
             pieceStats[i] = old.getPieceStats()[i];
         }
-        
+
     }
 
-
-    
 }

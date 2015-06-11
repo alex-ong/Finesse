@@ -1,6 +1,6 @@
 
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Vector;
 
 /*
  * To change this template, choose Tools | Templates
@@ -22,7 +22,7 @@ public class Randomizers {
     
     public static LinkedList<Integer> fillBagRandomizer() {
         LinkedList<Integer> result = new LinkedList<Integer>();
-        Vector<Integer> newBag = new Vector<Integer>();
+        ArrayList<Integer> newBag = new ArrayList<Integer>();
         //fill bag
         for (int i = 0; i < 7; i++){
             newBag.add(i);

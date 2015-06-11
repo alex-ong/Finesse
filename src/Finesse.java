@@ -1,4 +1,3 @@
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
@@ -160,10 +159,6 @@ public class DisplayExample  {
             }
     }
 	
-    
-        
-        
-        
 	/**
 	 * Initialise the GL display
 	 * 
@@ -205,9 +200,7 @@ public class DisplayExample  {
 
 }    
     
-    
-    
-    
+
     public Finesse(String args[])
     {
         DisplayExample displayExample = new DisplayExample(args);
@@ -217,7 +210,9 @@ public class DisplayExample  {
     
     public static void main(String args[])
     {
+        
         System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
+        
         //make sure u copy the dlls!
         new Finesse(args);
 

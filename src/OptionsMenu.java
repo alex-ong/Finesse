@@ -1,8 +1,6 @@
 
 import java.awt.Font;
 import java.io.*;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Scanner;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -246,6 +244,7 @@ class OptionsMenu {
     public int getSelection() {
         return selection;
     }
+    
     private void enterSelection(){
         if (selection == (captions.length - 1)) { //if exit            
             whichState = Finesse.DisplayExample.GAME_MENU;
@@ -266,8 +265,7 @@ class OptionsMenu {
         invokeSelection(i);
     }
     
-    private void invokeSelection(int i) {        
-        
+    private void invokeSelection(int i) {                
         selections[selection]+= i;
         if (selections[selection] >= values[selection].length){
             selections[selection] = 0;    

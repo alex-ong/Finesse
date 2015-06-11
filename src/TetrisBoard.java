@@ -99,7 +99,7 @@ public class TetrisBoard
      * Set the number of rows in the board.  The board
      * will be reset after this is done.
      * 
-     * @param rowss The number of desired rows.
+     * @param rows The number of desired rows.
      */
     public void setRows(int rows)
     {
@@ -144,8 +144,6 @@ public class TetrisBoard
      * multiple add/removes.
      * 
      * @param piece  The piece to add.
-     * @param notify If true then fire a BoardEvent once the piece
-     *               is added.
      */
     public void addPiece(TetrisPiece piece)
     {
