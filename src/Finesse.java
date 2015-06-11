@@ -209,14 +209,9 @@ public class DisplayExample  {
     }
     
     public static void main(String args[])
-    {
-        
+    {       
         System.setProperty("org.lwjgl.librarypath",System.getProperty("user.dir") + "/lib/");
-        
-        //make sure u copy the dlls!
         new Finesse(args);
-
-        
     }
    
 }
