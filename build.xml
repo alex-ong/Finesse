@@ -17,14 +17,25 @@
         <mkdir dir="${dist.jar.dir}/res"/>
 
         <copy todir="${dist.jar.dir}/res">
-
             <fileset dir="res" includes="**"/>
-
         </copy>
         
         <echo>Creating replay folder</echo>
         <mkdir dir="${dist.jar.dir}/rep"/>
-
-
+		
+		<echo>Copying sample replays</echo>
+		<copy todir="${dist.jar.dir}/rep">
+			<fileset dir="rep" includes="**"/>
+		</copy>
+		
+		<echo>Copying libs</echo>
+		<copy todir="${dist.jar.dir}/lib">
+			<fileset dir="lib" includes="**"/>
+		</copy>
+		
+		<echo>Copy our readme</echo>
+		<delete file="${dist.jar.dir}/README.TXT"/>
+		<copy file="README.txt" tofile="${dist.jar.dir}/README.txt"/>
+		
     </target>
 </project>
