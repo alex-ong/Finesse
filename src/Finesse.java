@@ -18,6 +18,7 @@ public class Finesse
      */
 
 public class DisplayExample  {
+    final String         version = "2015-06-12";
     final TetrisGame     fGame        = new TetrisGame();
     final TetrisMenu     fMenu        = new TetrisMenu();
     final OptionsMenu    fOptions     = new OptionsMenu();
@@ -73,7 +74,7 @@ public class DisplayExample  {
             Display.setTitle("Finesse - Loading 95%");
             fReplay.init();
             fReplay.setGame(fGame);
-            Display.setTitle("Finesse  v1.0b");
+            Display.setTitle("Finesse  " + version);
             
             fGame.setOptions(fOptions);
             fOptions.loadSettings();
@@ -169,7 +170,7 @@ public class DisplayExample  {
 		try {
 			Display.setDisplayMode(new DisplayMode(width,height));
 			Display.create();
-			//Display.setVSyncEnabled(true);
+			Display.setVSyncEnabled(false);
 
 		} catch (LWJGLException e) {
                         System.out.println(e);
