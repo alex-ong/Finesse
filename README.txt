@@ -7,3 +7,5 @@ Changelog
 -----------------
 
 //TODO
+//Timer accuracy graph
+//180° on shift keys

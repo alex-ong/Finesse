@@ -9,7 +9,9 @@ public class InputLoader {
 
     public static final int HOLD = 40;
     public static final int UNDO = 41;
-
+    public static final int REVERSE_ORIENT = 42;
+    public static final int REVERSE_ORIENT_ALT = 43;
+    
     public static class columnOrientation {
 
         int column;
@@ -71,10 +73,12 @@ public class InputLoader {
                 Keyboard.KEY_PERIOD,
                 Keyboard.KEY_SLASH,
                 Keyboard.KEY_SPACE,
-                Keyboard.KEY_BACK,};
+                Keyboard.KEY_BACK,
+                Keyboard.KEY_LSHIFT,
+                Keyboard.KEY_RSHIFT,};
 
     public static columnOrientation keyToCode(int key) {
-        for (int i = 0; i < 42; i++) {
+        for (int i = 0; i < keyCodes.length; i++) {
             if (keyCodes[i] == key) {
                 if (i < 40) {
                     return new columnOrientation(i % 10, i / 10);

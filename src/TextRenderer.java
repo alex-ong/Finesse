@@ -66,8 +66,16 @@ public class TextRenderer {
     
     private int[][] keyFrequency = new int[4][10];
     private boolean[][] keyboardGUI = new boolean[4][10];
-    private int spaceFrequency = 0;
+    
+    private int spaceFrequency = 0;       
     private boolean spaceDown = false;
+    
+    private int backSpaceFrequency = 0;
+    private boolean backSpaceDown = false;
+    
+    private int shiftFrequency = 0;
+    private int shiftDown = 0; //number of shiftKeys held down...
+    
     private ArrayList<ScoreKeeper.Score> scores = null;
     private int[] pieceStats = null;;
     
@@ -85,7 +93,8 @@ public class TextRenderer {
             }
         }
         spaceDown = false;
-        
+        backSpaceDown = false;
+        shiftDown = 0;
     }
     
     @SuppressWarnings("unchecked")
@@ -128,13 +137,36 @@ public class TextRenderer {
     public void setScoreList(ArrayList<ScoreKeeper.Score> list){
         scores = list;
     }    
+    
+    public void backSpaceDown() {
+        if (gameState == TetrisGame.GAME_PLAYING) backSpaceFrequency++;
+        backSpaceDown = true;
+    }
+    
+    public void backSpaceUp() {
+        backSpaceDown = false;
+    }
+    
+    public void shiftDown() {
+        if (gameState == TetrisGame.GAME_PLAYING) shiftFrequency++;
+        shiftDown++;
+    }
+    
+    public void shiftUp() {
+        shiftDown--;
+    }
+    
+    
     public void spaceDown(){
         if (gameState == TetrisGame.GAME_PLAYING) spaceFrequency++;
         spaceDown = true;
     }
+    
     public void spaceUp(){
         spaceDown = false;        
     }
+    
+    
     
     public void keyDown(int column, int row, char key){
         keysPressed[column].add(key);
@@ -271,7 +303,8 @@ public class TextRenderer {
         font.drawString(StartStatsX - advance, StartStatsY + 120, 
                 df.format(TPM), statsColor());     
     }
-     //num keys pressed
+    
+    //num keys pressed
     private void renderKeys() {
         int advance = font.getWidth(Integer.toString(keys));
         font.drawString(StartStatsX - advance, StartStatsY + 160, 
@@ -289,9 +322,6 @@ public class TextRenderer {
     }
 
 
-
-
-    
     public void renderFlash() {
         for (int i = 0; i < 10; i++){
             if (!keysPressed[i].isEmpty()) {
@@ -341,7 +371,13 @@ public class TextRenderer {
                 keyFrequency[i][j] = 0;
             }
         }
+        
+        spaceFrequency = 0;
+        backSpaceFrequency = 0;
+        shiftFrequency = 0;
+        
     }
+    
     public void setPieces(int pieces) {
         this.pieces = pieces;
     }
@@ -371,28 +407,49 @@ public class TextRenderer {
             }
         }
         if (spaceDown) renderHold(Color.red);
+        if (backSpaceDown) renderUndo(Color.red);
+        if (shiftDown > 0) renderReverse(Color.red);
     }
     
-
+    private void renderUndo(Color c) {
+        c.bind();       
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        int topLeftX = 664;
+        int topLeftY = 55; //magic!
+        int bottomRightX = 702;
+        int bottomRightY = 76;
+        GL11.glRecti(topLeftX,topLeftY,bottomRightX,bottomRightY);    
+    }
+    
+    private void renderReverse(Color c) {
+        c.bind();       
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        int topLeftX = 444;
+        int topLeftY = 121; //magic!
+        int bottomRightX = 482;
+        int bottomRightY = 142;
+        GL11.glRecti(topLeftX,topLeftY,bottomRightX,bottomRightY);    
+    }
+    
     private void renderHold(Color c){
-            c.bind();       
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            int topLeftX = 514;
-            int topLeftY = 143; //magic!
-            int bottomRightX = 647;
-            int bottomRightY = 160;
-            GL11.glRecti(topLeftX,topLeftY,bottomRightX,bottomRightY);    
+        c.bind();       
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        int topLeftX = 514;
+        int topLeftY = 143; //magic!
+        int bottomRightX = 647;
+        int bottomRightY = 160;
+        GL11.glRecti(topLeftX,topLeftY,bottomRightX,bottomRightY);    
     }
     
     private void renderKey(int x, int y, Color c){
-            c.bind();       
+        c.bind();       
 
-            GL11.glDisable(GL11.GL_TEXTURE_2D);
-            int topLeftX = KeyboardX + y*KeyboardRow + x*KeyboardSize;
-            int topLeftY = KeyboardY + y*KeyboardSize;
-            int bottomRightX = topLeftX + KeyboardSize - 1;
-            int bottomRightY = topLeftY + KeyboardSize - 1;
-            GL11.glRecti(topLeftX,topLeftY,bottomRightX,bottomRightY);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        int topLeftX = KeyboardX + y*KeyboardRow + x*KeyboardSize;
+        int topLeftY = KeyboardY + y*KeyboardSize;
+        int bottomRightX = topLeftX + KeyboardSize - 1;
+        int bottomRightY = topLeftY + KeyboardSize - 1;
+        GL11.glRecti(topLeftX,topLeftY,bottomRightX,bottomRightY);
     }
     
     private void renderKeyStats() {
@@ -417,6 +474,12 @@ public class TextRenderer {
         
         int amount = (int)(shade*spaceFrequency);        
         renderHold(new Color(amount, 0, 0));
+        
+        amount = (int)(shade*backSpaceFrequency);
+        renderUndo(new Color(amount, 0, 0));
+        
+        amount = (int)(shade*shiftFrequency);
+        renderReverse(new Color(amount, 0, 0));
         
     }
 

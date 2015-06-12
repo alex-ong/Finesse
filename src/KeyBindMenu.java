@@ -32,11 +32,15 @@ class KeyBindMenu {
         if (currentBind < 40) {
             return keyBinds[currentBind / 10] + " "
                     + String.valueOf(currentBind % 10);
-        } else if (currentBind == 40) {
+        } else if (currentBind == InputLoader.HOLD) {
             return "Hold";
-        } else if (currentBind == 41) {
+        } else if (currentBind == InputLoader.UNDO) {
             return "Undo";
-        }
+        } else if (currentBind == InputLoader.REVERSE_ORIENT) {
+            return "Reverse Orientation";
+        } else if (currentBind == InputLoader.REVERSE_ORIENT_ALT) {
+            return "Reverse Orientation Alternative";
+        } 
         return null;
     }
 
@@ -176,16 +180,18 @@ class KeyBindMenu {
                 } else if (key == Keyboard.KEY_RETURN) {
                     //nothing
                 } else {
-                    System.out.println(key);
+                    System.out.print(key);
+                    System.out.print(" ");
                     System.out.println(Keyboard.getKeyName(key));
 
                     InputLoader.keyCodes[currentBindToInputLoader(currentBind)] = key;
 
-                    if (currentBind < 41) {
+                    if (currentBind < InputLoader.keyCodes.length - 1) {
                         currentBind++;
                         captions[1] = bindToCaption();
                     } else {
                         writeSettings();
+                        captions[1] = "All done!";
                         exit = true;
                     }
 

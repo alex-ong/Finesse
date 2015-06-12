@@ -72,7 +72,7 @@ public class ReplayMaker {
         outputActions(f);
     }
 
-    public class HelloThread extends Thread {
+    public class ReplayWritingThread extends Thread {
 
         ReplayMaker rm;
         String win;
@@ -82,7 +82,7 @@ public class ReplayMaker {
             rm.printReplay2(win);
         }
 
-        public HelloThread(ReplayMaker rm, String win) {
+        public ReplayWritingThread(ReplayMaker rm, String win) {
             this.rm = rm;
             this.win = win;
         }
@@ -113,7 +113,7 @@ public class ReplayMaker {
     }
 
     public void printReplay(String win) {
-        new HelloThread(this.clone(), win).start();
+        new ReplayWritingThread(this.clone(), win).start();
     }
 
     public void printActions() {

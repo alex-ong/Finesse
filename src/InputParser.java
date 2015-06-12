@@ -19,6 +19,11 @@ public class InputParser {
             fTextRenderer.spaceDown();
         } else if (convert.column == InputLoader.UNDO) {
             fGame.undo();
+            fTextRenderer.backSpaceDown();
+        } else if (convert.column == InputLoader.REVERSE_ORIENT ||
+                    convert.column == InputLoader.REVERSE_ORIENT_ALT) {
+            //nothing for now.
+            fTextRenderer.shiftDown();
         } else {
             switch (key) {
                 case Keyboard.KEY_RETURN:
@@ -41,6 +46,11 @@ public class InputParser {
             fTextRenderer.keyUp(convert.column, convert.orientation, c);
         } else if (convert.column == InputLoader.HOLD) {
             fTextRenderer.spaceUp();
+        } else if (convert.column == InputLoader.UNDO) {
+            fTextRenderer.backSpaceUp();
+        } else if (convert.column == InputLoader.REVERSE_ORIENT ||
+            convert.column == InputLoader.REVERSE_ORIENT_ALT) {
+            fTextRenderer.shiftUp();
         } else {
             dontRelease = true;
         }
