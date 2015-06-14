@@ -13,3 +13,6 @@ Changelog
 
 //need to upgrade to lwjgl and use events for input handling
 //when using events for input handling, we don't have to render as fast as possible
+//need to save options out for replay - e.g. Alignment, whether undo is allowed. otherwise replays break.
+//save out our options before loading replay
+//load our options after finishing replay.
