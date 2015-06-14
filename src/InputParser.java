@@ -23,13 +23,16 @@ public class InputParser {
         } else if (convert.column == InputLoader.REVERSE_ORIENT ||
                     convert.column == InputLoader.REVERSE_ORIENT_ALT) {
             //nothing for now.
+            fGame.pressReverse();
             fTextRenderer.shiftDown();
         } else {
             switch (key) {
                 case Keyboard.KEY_RETURN:
-                    fGame.stopGame();
-                    fGame.countDownGame();
-                    fGame.GameLogic();
+                    if (fGame.getReverseDown() == 0) {
+                        fGame.stopGame();
+                        fGame.countDownGame();
+                        fGame.GameLogic();
+                    }
                     break;
                 case Keyboard.KEY_ESCAPE:
                     fGame.setMenu(true);
@@ -50,6 +53,7 @@ public class InputParser {
             fTextRenderer.backSpaceUp();
         } else if (convert.column == InputLoader.REVERSE_ORIENT ||
             convert.column == InputLoader.REVERSE_ORIENT_ALT) {
+            fGame.releaseReverse();
             fTextRenderer.shiftUp();
         } else {
             dontRelease = true;

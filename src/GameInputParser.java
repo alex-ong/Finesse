@@ -25,7 +25,7 @@ public class GameInputParser {
     public void pollInput() {
 
         while (Keyboard.next()) {
-            if (Keyboard.getEventKeyState()) {
+            if (Keyboard.getEventKeyState()) {                
                 int key = Keyboard.getEventKey();
                 if (fGame.getGameState() == TetrisGame.GAME_PLAYING) {
                     fReplayMaker.addAction(key, true, fGame.getCurrentFrame() - fGame.getFirstFrame());

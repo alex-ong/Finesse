@@ -59,6 +59,8 @@ public class TetrisGame {
     private String loadPieces;
     private TetrisGameState previousMove = null;
     private boolean canUndo;
+    private int reverseDown = 0;
+    
 
     /**
      * Create a TetrisGame.
@@ -106,6 +108,9 @@ public class TetrisGame {
 
     public long getGameTimer() {
         return currentFrame - gameStartFrame;
+    }
+    public int getReverseDown() {
+        return reverseDown;
     }
 
     public void render() {
@@ -168,7 +173,7 @@ public class TetrisGame {
         fReplayMaker.reset();
         fTextRenderer.reset();
         fMenu = false;
-        fBoard.resetBoard();
+        fBoard.resetBoard();        
         randomizer = options.getSetting(OptionsMenu.GET_RANDOMIZER);
         pieceAlignment = options.getSetting(OptionsMenu.GET_ALIGNMENT);
         canUndo = (options.getSetting(OptionsMenu.GET_UNDO) == 1);
@@ -190,11 +195,7 @@ public class TetrisGame {
             pieceStats[i] = 0;
         }
 
-        if (options.getSetting(OptionsMenu.GET_SAVE) == 1) {
-            printReplay = true;
-        } else {
-            printReplay = false;
-        }
+        printReplay = options.getSetting(OptionsMenu.GET_SAVE) == 1;
 
         if (options.getSetting(OptionsMenu.GET_TEXTURE_ROTATE_BOARD) == 1) {
             fBoardGUI.setFlipBoard(true);
@@ -236,15 +237,15 @@ public class TetrisGame {
     }
 
     public static int stringToAlignment(String s) {
-        if ("LEFT".equals(s)) {
-            return 0;
-        } else if ("RIGHT".equals(s)) {
-            return 1;
-        } else if ("CENTER".equals(s)) {
-            return 2;
-        } else {
-            return 2;
+        if (null != s) switch (s) {
+            case "LEFT":
+                return 0;
+            case "RIGHT":
+                return 1;
+            case "CENTER":
+                return 2;            
         }
+        return 2;
     }
 
     /**
@@ -291,16 +292,18 @@ public class TetrisGame {
         }
     }
 
-    public void undo() {
+    public void undo() {        
+        if (!(fGameState == GAME_PLAYING)) {
+            return;
+        }
+        fKeys++;
         if (!canUndo) {
             return;
         }
         if (previousMove == null) {
             return;
         }
-        if (!(fGameState == GAME_PLAYING)) {
-            return;
-        }
+        
         fBoard.copy(previousMove.fBoard);
         fTotalLines = previousMove.fTotalLines;
         for (int i = 0; i < 7; i++) {
@@ -355,6 +358,19 @@ public class TetrisGame {
         fBoard.releaseKey(key);
     }
 
+    public void pressReverse() {
+        this.reverseDown++;
+        if (fGameState == GAME_COUNTDOWN || fGameState == GAME_PLAYING) {
+            fKeys++;
+        }       
+    }
+    public void releaseReverse() {
+        this.reverseDown--;
+        if (this.reverseDown < 0) {
+            this.reverseDown = 0;
+        }
+    }
+    
     public void typer(int column, int rotation, int key) {
         if (!(fGameState == GAME_PLAYING)) {
             return;
@@ -365,6 +381,10 @@ public class TetrisGame {
         //rotate then move 
         fPieces++;
         fKeys++;
+        if (this.reverseDown > 0) {
+            rotation += 2;
+            rotation %= 4;
+        }
         move(rotation);
         int currColumn = fCurrPiece.column();
         fCurrPiece.setKeyPressed(key);

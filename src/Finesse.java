@@ -11,8 +11,6 @@ import org.lwjgl.opengl.GL11;
  */
 public class Finesse
 {
-
-
     /**
      * Create in instance of TypeTris
      */
