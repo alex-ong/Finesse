@@ -10,4 +10,6 @@ Changelog
 //Timer accuracy graph
 
 //pressing undo while other keys held down stuff up the animations
-//shift won't work in replays if binds are different. save keybind for shift into replay.
+
+//need to upgrade to lwjgl and use events for input handling
+//when using events for input handling, we don't have to render as fast as possible
