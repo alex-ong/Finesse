@@ -16,12 +16,18 @@ public class ReplayLoader {
 
     ArrayList<Action> actions = new ArrayList<Action>();
     private String alignment = "NO IDEA";
+    private boolean canUndo = false;
+    
     public BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
 
     public ReplayLoader() {
         textEncryptor.setPassword("TTCSucks");
     }
 
+    public boolean getUndo() {
+        return this.canUndo;
+    }
+    
     public String getNumPieces() {
         return String.valueOf(pieceString.length());
     }
@@ -30,9 +36,8 @@ public class ReplayLoader {
         return alignment;
     }
 
-    public String getTime() {
-        DecimalFormat df = new DecimalFormat("0.000");
-        return df.format((double) (actions.get(actions.size() - 1).time) / 1000);
+    public long getTime() {        
+        return actions.get(actions.size() - 1).time;
     }
 
     public String getPieces() {
@@ -70,8 +75,11 @@ public class ReplayLoader {
                     //list of chars
                     pieceString = nextLine;
                 } else if (splits.length == 2) {
-                    //alignment
-                    alignment = splits[1];
+                    if ("Alignment".equals(splits[0])) {                        
+                        alignment = splits[1];
+                    } else if ("AllowUndo".equals(splits[0])) {                        
+                        canUndo = Boolean.parseBoolean(splits[1]);
+                    }
                 } else if (splits.length == 3) {
                     //action
                     Action a = new Action(Integer.parseInt(splits[0]),

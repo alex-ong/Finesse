@@ -19,9 +19,11 @@ public class ReplayMaker {
     private volatile int[] pieces = new int[400];
     private volatile int numPieces = 0;
     private volatile String alignment;
+    private volatile boolean undoAllowed;
     private volatile ArrayList<Action> actions = new ArrayList<Action>();
     private BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-
+    
+    
     public String getAlignment() {
         return alignment;
     }
@@ -30,6 +32,10 @@ public class ReplayMaker {
         textEncryptor.setPassword("TTCSucks");
     }
 
+    public void setUndoAllowed(boolean result) {
+        this.undoAllowed = result;
+    }
+    
     public void setAlignment(String alignment) {
         this.alignment = alignment;
     }
@@ -38,12 +44,15 @@ public class ReplayMaker {
     public ReplayMaker clone() {
         ReplayMaker result = new ReplayMaker();
         result.numPieces = this.numPieces;
+        //copy array
         for (int i = 0; i < numPieces; i++) {
             result.pieces[i] = this.pieces[i];
         }
 
         result.actions = (ArrayList<Action>) this.actions.clone();
-
+        result.undoAllowed = this.undoAllowed;
+        result.alignment = this.alignment;
+        
         return result;
     }
 
@@ -61,10 +70,11 @@ public class ReplayMaker {
         f.newLine();
         f.append(textEncryptor.encrypt("Alignment " + alignment));
         f.newLine();
+        f.append(textEncryptor.encrypt("AllowUndo " + Boolean.toString(undoAllowed)));
+        f.newLine();
         String s = "";
         for (int i = 0; i < numPieces; i++) {
             s += PieceStringParser.parsePiece(pieces[i]);
-
         }
         //f.append(s);
         f.append(textEncryptor.encrypt(s));

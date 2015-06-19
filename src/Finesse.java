@@ -16,7 +16,7 @@ public class Finesse
      */
 
 public class DisplayExample  {
-    final String         version = "2015-06-12";
+    final String         version      = "2015-06-19";
     final TetrisGame     fGame        = new TetrisGame();
     final TetrisMenu     fMenu        = new TetrisMenu();
     final OptionsMenu    fOptions     = new OptionsMenu();

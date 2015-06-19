@@ -164,11 +164,15 @@ public class TetrisGame {
     public void setPieceAlignment(int alignment) {
         pieceAlignment = alignment;
     }
+    
+    public void setCanUndo(boolean undo) {
+        this.canUndo = undo;
+    }
 
     /**
      * Start a Tetris game if one is not already playing.
      */
-    public void countDownGame() {
+    public void countDownGame() {        
         previousMove = null;
         fReplayMaker.reset();
         fTextRenderer.reset();
@@ -260,6 +264,7 @@ public class TetrisGame {
             if ((maxTime == 0 || getGameTimer() < maxTime)
                     && ((fullSave == 1 && fTotalLines >= 40) || fullSave == 0)) {
                 fReplayMaker.setAlignment(alignmentToString(pieceAlignment));
+                fReplayMaker.setUndoAllowed(this.canUndo);
                 fReplayMaker.printReplay((fTotalLines >= 40 ? "Win" : "Lose"));
                 fReplayMaker.reset();
             }

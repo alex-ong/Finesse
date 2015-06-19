@@ -28,14 +28,15 @@ public class ReplayInputParser {
         fGame.countDownGame();
         fGame.printReplay = false;
         fGame.setPieces(fReplayLoader.getPieces());
-        fGame.setPieceAlignment(TetrisGame.stringToAlignment(fReplayLoader.getAlignment()));
+        fGame.setPieceAlignment(TetrisGame.stringToAlignment(fReplayLoader.getAlignment()));        
+        fGame.setCanUndo(fReplayLoader.getUndo());
         fGame.GameLogic();
     }
 
     private void endReplay() {
         List<Action> acts = fReplayLoader.getActions();
         fGame.stopGame();
-        fGame.setGameTimer(acts.get(acts.size() - 1).time);
+        fGame.setGameTimer(fReplayLoader.getTime());
     }
 
     public void parseActions() {
